@@ -101,7 +101,7 @@ Link del proyecto: [https://github.com/idmr023/Libreria](https://github.com/idmr
 [license-url]: https://github.com/github_username/repo_name/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/ivan-daniel-manrique-roa-978a29187
-[webpage-screenshot]: images/screenshot.png
+[webpage-screenshot]: images/screeenshot.png
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
 [Vite.js]: https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white
