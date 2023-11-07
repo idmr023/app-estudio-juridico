@@ -34,7 +34,7 @@
     <li>
       <a href="#acerca-del-proyecto">Acerca del proyecto</a>
       <ul>
-        <li><a href="#construido">Tecnologías usadas</a></li>
+        <li><a href="#tecnologias-usadas">Tecnologías usadas</a></li>
       </ul>      
       <ul>
         <li><a href="#actualizaciones">Actualizaciones</a></li>
@@ -46,12 +46,12 @@
 <!-- ABOUT THE PROJECT -->
 ## Acerca del proyecto
 
-[![webpage][webpage-screenshot]]
+![webpage][webpage-screenshot]
 
-En este pryecto he querido combinar todas las tecnlogías que conozco hasta el momento. La página trata acerca de una biblioteca, esta tiene un catálogo de libros para prestar, así mismo esta biblioteca vende los libros. `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
+En este pryecto he querido combinar todas las tecnlogías que conozco hasta el momento. La página trata acerca de una biblioteca, esta tiene un catálogo de libros para prestar, así mismo esta biblioteca vende los libros.
 
 
-### Construido con
+### Tecnologías usadas
 
 * [![Vite][Vite.js]][Vite-url]
 * [![React][React.js]][React-url]
