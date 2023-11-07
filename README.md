@@ -22,7 +22,6 @@
     <br/>
     <a href="">Vea una demostración</a>
     <br/>
-    .
     <a href="https://github.com/idmr023/Libreria/issues">Reportar bugs</a>
   </p>
 </div>
@@ -47,7 +46,7 @@
 <!-- ABOUT THE PROJECT -->
 ## Acerca del proyecto
 
-[![Biblioteca][webpage-screenshot]]
+[![webpage][webpage-screenshot]]
 
 En este pryecto he querido combinar todas las tecnlogías que conozco hasta el momento. La página trata acerca de una biblioteca, esta tiene un catálogo de libros para prestar, así mismo esta biblioteca vende los libros. `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
 
@@ -77,13 +76,13 @@ Click en [open issues](https://https://github.com/idmr023/Libreria/issues) para 
 <!-- LICENSE -->
 ## Licencia
 
-Distribuido bajo una licencia MIT. See `LICENSE.txt` for more information.
+Distribuido bajo una licencia MIT. Vea `LICENSE.txt` para mayor información.
 
 
 <!-- CONTACT -->
 ## Contacto
 
-Ivan Manrique - [!linkedin]linkedin-shield]][linkedin-url] - idmr_02@outlook.com
+Ivan Manrique - [![linkedin][linkedin-shield]][linkedin-url] - idmr_02@outlook.com
 
 Link del proyecto: [https://github.com/idmr023/Libreria](https://github.com/idmr023/Libreria)
 
