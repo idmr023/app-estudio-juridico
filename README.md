@@ -208,7 +208,7 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/linkedin_username
 [product-screenshot]: images/screenshot.png
-[HTML]: https://cdn-icons-png.flaticon.com/512/174/174854.png
+[HTML]: https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=HTML5&logoColor=white
 [HTML-url]: https://es.wikipedia.org/wiki/HTML5
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
