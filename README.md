@@ -18,7 +18,10 @@
 
   <p align="center">
     Una biblioteca diferente
+    <br/>
+    <br/>
     <a href="">Vea una demostración</a>
+    <br/>
     .
     <a href="https://github.com/idmr023/Libreria/issues">Reportar bugs</a>
   </p>
@@ -30,28 +33,26 @@
   <summary>Tabla de contenidos</summary>
   <ol>
     <li>
-      <a href="#about-the-project">Acerca del proyecto</a>
+      <a href="#acerca-del-proyecto">Acerca del proyecto</a>
       <ul>
-        <li><a href="#built-with">Tecnologías usadas</a></li>
+        <li><a href="#construido">Tecnologías usadas</a></li>
       </ul>      
       <ul>
-        <li><a href="#updates">Actualizaciones</a></li>
+        <li><a href="#actualizaciones">Actualizaciones</a></li>
       </ul>
     </li>
   </ol>
 </details>
 
 <!-- ABOUT THE PROJECT -->
-## About The Project
+## Acerca del proyecto
 
 [![Biblioteca][webpage-screenshot]]
 
 En este pryecto he querido combinar todas las tecnlogías que conozco hasta el momento. La página trata acerca de una biblioteca, esta tiene un catálogo de libros para prestar, así mismo esta biblioteca vende los libros. `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
 
 
-<p align="right">(<a href="#readme-top">Volver a arriba</a>)</p>
-
-### Built With
+### Construido con
 
 * [![Vite][Vite.js]][Vite-url]
 * [![React][React.js]][React-url]
@@ -61,10 +62,9 @@ En este pryecto he querido combinar todas las tecnlogías que conozco hasta el m
 * [![MYSQL][MYSQL.io]][MYSQL-url]
 
 
-<p align="right">(<a href="#readme-top">Volver a arriba</a>)</p>
 
 <!-- ROADMAP -->
-## Updates
+## Actualizaciones
 
 - [ ] Página 404 estilizada completamente
 - [ ] Página contacto envía correos
@@ -73,29 +73,23 @@ En este pryecto he querido combinar todas las tecnlogías que conozco hasta el m
 
 Click en [open issues](https://https://github.com/idmr023/Libreria/issues) para una lista de todas las funcionalidades propuests.
 
-<p align="right">(<a href="#readme-top">Volver a arriba</a>)</p>
-
 
 <!-- LICENSE -->
-## License
+## Licencia
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#readme-top">Volver a arriba</a>)</p>
-
+Distribuido bajo una licencia MIT. See `LICENSE.txt` for more information.
 
 
 <!-- CONTACT -->
-## Contact
+## Contacto
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+Ivan Manrique - [!linkedin]linkedin-shield]][linkedin-url] - idmr_02@outlook.com
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
+Link del proyecto: [https://github.com/idmr023/Libreria](https://github.com/idmr023/Libreria)
 
 <p align="right">(<a href="#readme-top">Volver a arriba</a>)</p>
 
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+<!-- LINKS E IMÁGENES -->
 [contributors-shield]: https://img.shields.io/github/contributors/github_username/repo_name.svg?style=for-the-badge
 [contributors-url]: https://github.com/github_username/repo_name/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/github_username/repo_name.svg?style=for-the-badge
@@ -107,7 +101,7 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 [license-shield]: https://img.shields.io/github/license/github_username/repo_name.svg?style=for-the-badge
 [license-url]: https://github.com/github_username/repo_name/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/linkedin_username
+[linkedin-url]: https://www.linkedin.com/in/ivan-daniel-manrique-roa-978a29187
 [webpage-screenshot]: images/screenshot.png
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
