@@ -1,45 +1,53 @@
-import React, { useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faArrowUp } from "@fortawesome/free-solid-svg-icons";
-import { ProductosContext } from "../../../contexts/Productos/ProductosContext";
+import axios from "axios";
 
 export const ContainerProductos = ({ showButton, scrollToTop }) => {
-    const {
-        cursos,
-    } = useContext(ProductosContext)
-
-    const categoriasUnicas = [...new Set(cursos.map((curso) => curso.categoria))];
+    const [libros, setLibros] = useState([]);
+    
+    useEffect(() => {
+        axios.get('http://localhost:3001/api/list_vent_lbrs')
+            .then((response) => {
+                setLibros(response.data);
+            })
+            .catch((error) => {
+                console.error('Error al obtener usuarios desde el servidor:', error);
+            });
+    }, []);
+    
+    const categoriasUnicas = [...new Set(libros.map((libro) => libro.categoria))];
 
     return (
-        <div>
-            <h2 className="subtitulo">Nuestros cursos</h2>
-            <nav>
-            <ul>
-                {categoriasUnicas.map((categoria) => (
-                    <div key={categoria} className="contenidoPrincipal-cursos">
-                    <h3>{categoria}</h3>
-                    <div className="contenedor--categoria">
-                        {cursos
-                        .filter((curso) => curso.categoria === categoria)
-                        .map((curso, index) => (
-                            <li className="contenedor--categoria__subcontainer" key={index}>
-                                <a href={curso.link}>{curso.nombre_prod}</a>
-                                <span className="contenedorIcono">
-                                    <FontAwesomeIcon
-                                    icon={faCartShopping}
-                                    className="Icon-container-check"
-                                    />
-                                </span>
-                            </li>
-                        ))}
-                    </div>
-                    </div>
-                ))}
-                {showButton && (
-                <FontAwesomeIcon icon={faArrowUp} onClick={scrollToTop} style={{ position: "absolute" }} />
-                )}
-            </ul>
-            </nav>
+        <section className="productos">
+        <h2 className="productos_subtitulo">Nuestros libros</h2>
+        
+        {categoriasUnicas.map((categoria, index) => (
+            <div key={categoria} className="productos_contProd">
+                <div key={index} className="contXcategoria">
+                    {libros
+                    .filter((libro) => libro.categoria === categoria)
+                    .map((libro) => (
+                        <li className="contXcategoria__subcontainer" key={libro.lbr_isbn}>
+                        <div className="contXcategoria--iconProductos">
+                            <FontAwesomeIcon icon={faCartShopping} />
+                        </div>
+                        <img className="contXcategoria--img" src={libro.lbr_portada} alt={libro.lbr_titulo} />
+                        <div className="contXcategoria--infoLibro">
+                            <h2>{libro.lbr_titulo}</h2>
+                            <p>{libro.lbr_autor}</p>
+                        </div>
+                        </li>
+                    ))}
+                </div>
+            </div>
+        ))}
+        <div className="productos_iconUp">
+            {showButton && (
+            <FontAwesomeIcon icon={faArrowUp} onClick={scrollToTop} />
+            )}
         </div>
+        </section>
     );
+    
 };

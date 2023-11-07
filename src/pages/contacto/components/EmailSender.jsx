@@ -1,20 +1,13 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import "../css/estilos_contacto.css";
-import styled from 'styled-components';
-
-const Boton = styled.button`
-    width: 100px;
-    background: #00bcd4;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    padding: 10px;
-    font-size: 18px;
-    width: 100%;
-`
-
-function EmailSender() {
+import {Formulario, FrmInput} from '../../../componentes/UI/form/form';
+import { BotonSbt as Boton } from '../../../componentes/UI/form/botones';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { Form } from 'react-bootstrap';
+import {FormContainer} from "../../../componentes/UI/form/form";
+function EmailSender({scrollToTop, showButton}) {
   const [emailResponse, setEmailResponse] = useState(null);
   const [contenido, setContenido] = useState('');
 
@@ -85,30 +78,34 @@ function EmailSender() {
     };
 
   return (
-    <div>
-      <div className="contactForm">
-        <form>
+    <FormContainer>
+      <Formulario className="contactForm">
             <h2>Envía un mensaje</h2>
-            <div className="inputBox">
-            <input type="text" id="nombre" name="usr" onChange={handleInput}/>
-            <span>Nombre completo</span>
-            </div>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Nombre completo</Form.Label> <br/>
+              <FrmInput type="text" name="usr" onChange={handleInput} />
+            </Form.Group>
 
-            <div className="inputBox">
-            <input type="email" id="correo" name="email" onChange={handleInput} />
-            <span>Email</span>
-            </div>
+            <Form.Group>
+              <Form.Label>Email</Form.Label> <br/>
+              <FrmInput type='email' name='email' onChange={handleInput}/>
+            </Form.Group>
 
-            <div className="inputBox">
-            <textarea id="contenido" name="msj" onChange={handleInput}></textarea>
-            <span>Escribe tu mensaje</span>
-            </div>
-        </form>
-      </div>
+            <Form.Group className="inputBox">
+            <Form.Label>Escribe tu mensaje</Form.Label>
+            <Form.Control as="textarea" id="contenido" name="msj"></Form.Control>
+            </Form.Group> <br/>
+        <Boton onClick={sendEmail}>Enviar Correo</Boton>
+      </Formulario>
 
-      <Boton onClick={sendEmail}>Enviar Correo</Boton>
       {emailResponse && <div>Respuesta del servidor: {JSON.stringify(emailResponse)}</div>}
-    </div>
+      <div className="productos_iconUp">
+                {showButton && (
+                    <FontAwesomeIcon icon={faArrowUp} onClick={scrollToTop} />
+                )}
+      </div>
+    </FormContainer>
+    
   );
 }
 

@@ -1,11 +1,22 @@
+import { useContext } from "react"
 import EmailSender from "./EmailSender"
+import { GoUpContext } from "../../../contexts/GoUp/GoUpContext"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faEnvelope, faLocationDot, faPhoneVolume } from "@fortawesome/free-solid-svg-icons"
 
 export const ContactInfo  = () => {
+    const {
+        showButton,
+        scrollToTop,
+    } = useContext(GoUpContext)
+    
     return (
         <>
             <div className="contactInfo">
                 <div className="box">
-                    <div className="icon"><img src="./img/logo/location-crosshairs-solid.svg" className="loguito" alt="/"/></div>
+                    <div className="icon">
+                        <FontAwesomeIcon icon={faLocationDot} />    
+                    </div>
                     <div className="text">
                     <h3>Dirección</h3>
                     <p>Av. Av. Arequipa 234, <br/>Cercado de Lima, Lima</p>
@@ -13,7 +24,9 @@ export const ContactInfo  = () => {
                 </div>
 
                     <div className="box">
-                    <div className="icon"><img src="./img/logo/phone-solid.svg" className="loguito" alt=""/></div>
+                    <div className="icon">
+                        <FontAwesomeIcon icon={faPhoneVolume} />    
+                    </div>
                     <div className="text">
                         <h3>Celular</h3>
                         <p>947 924 204</p>
@@ -21,7 +34,9 @@ export const ContactInfo  = () => {
                     </div>
 
                     <div className="box">
-                    <div className="icon"><img src="./img/logo/envelope-solid.svg" className="loguito" alt=""/></div>
+                    <div className="icon">
+                        <FontAwesomeIcon icon={faEnvelope} />    
+                    </div>
                     <div className="text">
                         <h3>Email</h3>
                         <p>bancoutp@utp.edu.pe</p>
@@ -31,7 +46,10 @@ export const ContactInfo  = () => {
                 </div>
 
                 <div className="contactForm">
-                    <EmailSender/>
+                    <EmailSender
+                        showButton={showButton}
+                        scrollToTop={scrollToTop}
+                    />
                 </div>
         </>
     )    

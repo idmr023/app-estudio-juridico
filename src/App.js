@@ -1,5 +1,5 @@
 import GlobalStyle from './GlobalStyle';
-import React, { useContext, useEffect, useState} from 'react';
+import React, { useContext} from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
@@ -40,11 +40,11 @@ function App() {
             <GlobalStyle />
               <Menu />
  
-                  <Routes>
-                    {rutas.map((ruta) => (
-                      <Route key={ruta.key} path={ruta.path} element={ruta.element} />
-                    ))}
-                  </Routes>
+              <Routes>
+                {rutas.map((ruta) => (
+                  <Route key={ruta.key} path={ruta.path} element={ruta.element} />
+                ))}
+              </Routes>
             <Footer />
     </>
   );

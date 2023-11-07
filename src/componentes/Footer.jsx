@@ -5,7 +5,8 @@ const StyledFooter = styled.footer`
     justify-content: space-between;
     background: var(--soft-green);
     padding: 60px 0 30px 0;
-    bottom: 0;
+    width: 100%;
+}
     .container__footer{
         border-bottom: 1px solid #ccc;
         justify-content: space-between;

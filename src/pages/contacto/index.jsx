@@ -11,7 +11,7 @@ const SectionContact = styled.section`
     align-items: center;
     flex-direction: column;
     flex-wrap: wrap;
-    background-color: #92BEF9;
+    background-color: var(--soft-grey);
 `
 
 const ContainerInfo = styled.div`
@@ -22,7 +22,8 @@ const ContainerInfo = styled.div`
     margin-top: 30px;
 `
 
-function Contacto (){
+function Contacto (){    
+
     return (
         <>
             <SectionContact className="contact">
@@ -31,6 +32,7 @@ function Contacto (){
                     <ContactInfo/>
                 </ContainerInfo>
             </SectionContact>
+            
         </>
     )
 }

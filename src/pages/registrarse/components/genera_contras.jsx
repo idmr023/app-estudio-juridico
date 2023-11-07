@@ -1,6 +1,7 @@
-import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';    
 import styled from 'styled-components';
+import { BotonSbt, BotonSbt2 } from '../../../componentes/UI/form/botones';
+import { FrmInput, Formulario } from '../../../componentes/UI/form/form';
 
 function encriptar(){
     let texto = document.getElementById('input__msj').value.toString();
@@ -34,9 +35,14 @@ function copiarAlPortapapeles(id_elemento) {
 }
 
 const Contenedor = styled.div`
-    position: absolute;
-    right: 250px;
-    bottom: 180px;
+    position: fixed;
+    right: 5%;
+    bottom: 13%;
+    @media (max-width: 768px) {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
 `
 
 const Contenido = () => {
@@ -44,24 +50,21 @@ const Contenido = () => {
     return (
         <>
         <Contenedor>
-            <Card style={{ width: '18rem'}} >
+            <Formulario style={{ width: '18rem'}} >
                 <Card.Body>
-                    <Card.Text>
-                        <form action="">
-                            <input type="text" placeholder="Texto a encriptar" id="input__msj" name="input__msj" required autoFocus />
-                            <p>Sólo letras minúsculas y sin acentos</p>
-                            <Button variant="primary" onClick={encriptar}>Encriptar</Button>
-                            <hr/>
+                    <Card.Text as="section">
+                            <FrmInput type="text" placeholder="Texto a encriptar" id="input__msj" name="input__msj" required autoFocus /> <br/>
+                            <span style={{ fontSize: '16px'}} >Sólo letras minúsculas y sin acentos</span>
+                            <BotonSbt onClick={encriptar}>Encriptar</BotonSbt>
                             <div>
-                                <input type="text" placeholder="Texo encriptado" id="mostrar_texto" name="mostrar_texto"/>
-                                <Button variant="light" onClick={copiarAlPortapapeles}>Copiar</Button>
-                                <Button variant="secondary" onClick={procesarDesenscriptar}>Desencriptar</Button>
+                                <FrmInput type="text" placeholder="Texo encriptado" id="mostrar_texto" name="mostrar_texto"/>
+                                <BotonSbt2 onClick={copiarAlPortapapeles}>Copiar</BotonSbt2>
+                                <BotonSbt onClick={procesarDesenscriptar}>Desencriptar</BotonSbt>
                             </div>
-                        </form>
 
                     </Card.Text>
                 </Card.Body>
-            </Card>
+            </Formulario>
         </Contenedor>
         </>
     )

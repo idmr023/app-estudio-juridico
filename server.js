@@ -1,21 +1,23 @@
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2');
-const { Resend } = require('resend');
-const app = express();
+const nodemailer = require('nodemailer');
 
+if(process.env.NODE_ENV !== 'production'){
+  require('dotenv').config();
+}
+
+const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Configuración de la conexión a MySQL
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'bdlibreria'
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
 });
 
-// Conectar a la base de datos
 db.connect((err) => {
   if (err) {
     console.error('Error al conectar a MySQL:', err);
@@ -24,55 +26,51 @@ db.connect((err) => {
   console.log('Conexión a MySQL exitosa');
 });
 
-// Lista admin
-
-app.get('/admin', (req, res) => {
-  const sql = 'SELECT * FROM admin';
+// Controlador para listar libros
+app.get('/api/list_vent_lbrs', (req, res) => {
+  const sql = 'SELECT lbr_isbn, lbr_titulo, lbr_editorial, lbr_autor, lbr_portada FROM libro';
   db.query(sql, (err, result) => {
     if (err) {
-      console.error('Error al obtener admin:', err);
-      res.status(500).send('Error al obtener admin');
+      handleError(res, err);
       return;
     }
     res.json(result);
   });
 });
 
+// Controlador para registrar usuario
 app.post('/api/signup', (req, res) => {
   const sql = 'INSERT INTO usuario (`usr_nom`, `usr_dni`, `usr_email`, `usr_pswd`) VALUES(?)';
-  const values = [
-    req.body.name,
-    req.body.dni,
-    req.body.email,
-    req.body.password,
-  ]
+  const values = [req.body.name, req.body.dni, req.body.email, req.body.password];
   db.query(sql, [values], (err, data) => {
-    if(err){
-      return res.json("Error");
+    if (err) {
+      handleError(res, err);
+      return;
     }
-    return res.json(data);
-  })
-})
-
-//Login
-app.post('/api/login', (req, res) => {
-  const {dni, password} = req.body
-  const values = [dni, password]
-  const sql = 'SELECT * FROM usuario WHERE usr_dni = ? AND usr_pswd = ?'
-    db.query(sql, values, (err, data) => {
-      if(err){
-        return res.json("Error")
-      } if(data.length > 0){
-        return res.json("Exito")
-      } else{
-        return res.json("Falla")
-      }
-    })
+    res.json(data);
+  });
 });
 
-//Enviar correo
+// Controlador para iniciar sesión
+app.post('/api/login', (req, res) => {
+  const { dni, password } = req.body;
+  const values = [dni, password];
+  const sql = 'SELECT * FROM usuario WHERE usr_dni = ? AND usr_pswd = ?';
+  db.query(sql, values, (err, data) => {
+    if (err) {
+      handleError(res, err);
+      return;
+    }
+    if (data.length > 0) {
+      res.json('Exito');
+    } else {
+      res.json('Falla');
+    }
+  });
+});
+
+// Controlador para enviar correo
 app.post('/api/send-email', async (req, res) => {
-  const nodemailer = require('nodemailer');
   const values = [
     req.body.usr,
     req.body.email,
@@ -80,11 +78,11 @@ app.post('/api/send-email', async (req, res) => {
   ]
   enviarMail = async() => {
       const config = {
-          host : 'smtp.gmail.com',
-          port : 587,
+          host : process.env.SMTP_HOST,
+          port : process.env.SMTP_PORT,
           auth : {
-              user: 'jparatupcya@gmail.com',
-              pass : 'xekh jfzl fzlg wuuv'
+              user: process.env.SMTP_USER,
+              pass : process.env.SMTP_PASSWORD
           }
       }
 
@@ -97,10 +95,16 @@ app.post('/api/send-email', async (req, res) => {
 
       const transport = nodemailer.createTransport(config);
       const info = await transport.sendMail(mensaje);
+      console.log(info);
   }
 
   enviarMail();
 })  
+
+function handleError(res, err) {
+  console.error('Error:', err);
+  res.status(500).send('Error interno del servidor');
+}
 
 app.listen(3001, () => {
   console.log('Servidor backend en ejecución en el puerto 3001');

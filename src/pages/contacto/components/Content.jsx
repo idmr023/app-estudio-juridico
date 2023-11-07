@@ -1,25 +1,16 @@
+import { Card, CardGroup } from "react-bootstrap"
 import styled from "styled-components"
 
-const ContainerContent = styled.div`
+const CardStyled = styled(CardGroup)`
     display: flex;
-    flex-wrap: wrap;
     .card{
-        width: 18rem;
-        margin: 0 auto;
+        width: 300px;
+        margin-right: 10px;
     }
-    .card img{
-        display: block;
-        width: 35%;
-        margin: 20px;
-        box-shadow: 1px 5px 10px 0px #949494;
-        border: none;
-        border-radius: 10%;
-        transition: all 0.3s ease;
-    }
-    .card img:hover{
-        transform: scale(1.1);
-        border-radius: 15%;
-        transform: skew(1deg, 1deg);
+    .card-body .card-img{
+        display: flex;
+        width: 200px;
+        margin: 10px auto;
     }
 `
 
@@ -27,33 +18,24 @@ export const Content = () =>{
     return (
         <>
             <h2>Contáctanos</h2>
-            <ContainerContent>
-            <div className="row">
-                <div className="col-sm-6 mb-3 mb-sm-0">
-                    <div className="card bg-light mb-3  mx-auto">
-                        <div className="card-body">
-                            <h5 className="card-title">Ofrecemos</h5>
-                            <p className="card-text">Amplia vocación en atención a ustedes.
-                            Sofisticados productos pensando en tu comodidad.
-                            Capacitaciones personalizadas de acuerdo a tus consumos.
-                            Amplia gama de servicios.<i className="ri-arrow-up-circle-fill up"></i></p>
-                            <img src="https://thumbs.dreamstime.com/z/banco-transferencia-de-dinero-conexi%C3%B3n-bancaria-icono-ilustraci%C3%B3n-vector-transacci%C3%B3n-para-presentaci%C3%B3n-en-sitios-web-y-195768300.jpg"/>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-sm-6">
-                    <div className="card text-white bg-info mb-3  mx-auto">
-                        <div className="card-body">
-                            <h5 className="card-title">Garantizamos</h5>
-                            <p className="card-text">Total reglamentización de acuerdo a las leyes impuestas. <br/>
-                            Fidelidad y seriedad de cláusulas impuestas por nosotros mismos.<br/>
-                            Trato justo de acuerdo con nuestros clientes</p>
-                            <img src="https://thumbs.dreamstime.com/z/banco-transferencia-de-dinero-conexi%C3%B3n-bancaria-icono-ilustraci%C3%B3n-vector-transacci%C3%B3n-para-presentaci%C3%B3n-en-sitios-web-y-195768300.jpg"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </ContainerContent>
+            <CardStyled>
+                <Card key="Light">
+                    <Card.Body>
+                        <Card.Title>Ofrecemos</Card.Title>
+                        <Card.Text>Ofrecemos un compromiso firme en brindarte la mejor atención. Nuestra biblioteca cuenta con una cuidadosa selección de libros y recursos</Card.Text>
+                        <Card.Img src="https://previews.123rf.com/images/sanek13744/sanek137442112/sanek13744211200060/178947504-icono-de-biblioteca-de-libros-en-estilo-plano-ilustración-de-vector-de-enciclopedia-sobre-fondo.jpg"/>
+                    </Card.Body>
+                </Card>
+                <Card>
+                        <Card.Body>
+                            <Card.Title>Garantizamos</Card.Title>
+                            <Card.Text>Cumplimiento total de las regulaciones y leyes bibliotecarias.<br/>
+                            Honestidad y seriedad en todas nuestras políticas y cláusulas.<br/>
+                            Trato equitativo y justo hacia nuestros usuarios y lectores.</Card.Text>
+                            <Card.Img src="https://previews.123rf.com/images/sanek13744/sanek137442112/sanek13744211200060/178947504-icono-de-biblioteca-de-libros-en-estilo-plano-ilustración-de-vector-de-enciclopedia-sobre-fondo.jpg"/>
+                        </Card.Body>
+                </Card>
+            </CardStyled>
         </>
     )
 }

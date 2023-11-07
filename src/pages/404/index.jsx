@@ -1,27 +1,25 @@
 import styled from "@emotion/styled";
 import {ParticlesBackground} from "./components/ParticlesBG";
+import {BotonSbt2} from "../../componentes/UI/form/botones";
+import { Link } from "react-router-dom";
 
 const Contenedor = styled.div`
     border-color: #000;
-    width: 150px;
     position: absolute;
     left: 50%;
     top: 50%;
-    width: 100px;
     transform: translate(-50%, -50%);
     font-size: 40px;
-    background-color: #fff;
+    color: var(--blanco);
+    z-index: +99;
     h1{
         text-align: center;
     }
-    h1:hover{
-    animation: 0.3s glitch infinite;
-    }
-    @keyframes glitch {
-    0%{ text-shadow: red -4px 0, cyan 4px 0; }
-    50%{ text-shadow: red 4px 0, cyan -4px 0; }
-    100%{ text-shadow: red -4px 0, cyan 4px 0; }
-    }
+`
+
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: var(--blanco);
 `
 
 function Page404 (){
@@ -29,7 +27,8 @@ function Page404 (){
     return (
         <>
             <Contenedor>
-                <h1>Hola</h1>
+                <h2>No hemos encontrado la página que buscas</h2>
+                <BotonSbt2><StyledLink to="/">Volver al inicio</StyledLink></BotonSbt2>
             </Contenedor>
             <ParticlesBackground/>
         </>

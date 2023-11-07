@@ -12,11 +12,6 @@ const GlobalStyle = createGlobalStyle`
     --soft-white: #f2f2f2;
     --soft-green: #6EBFB5;
     --black-green: #52948C;
-    --soft-red: #FFC7C7;
-    --azul: #0B006C;
-    --rosado: #ff4081;
-    --amarillo: #ffd500;
-    --verde-claro: #00e676;
     --morado: #6200ea;
     --blanco: #fff;
     --negro: #000;
@@ -26,6 +21,9 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
+  }
+  html{
+    height: 100%;
   }
   .hyb{
     display: flex;
