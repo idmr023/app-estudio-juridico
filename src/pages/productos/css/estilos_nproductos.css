@@ -33,20 +33,20 @@ section.home{
     font-size: 16px;
 }
 
-.productos_subtitulo{
+/* .productos_subtitulo{
 	font-weight: bold;
 	font-size: 32px;
 	margin-bottom: 10px;
 	text-align: center;
-}
+} */
 
 /*Container contenido*/
 
-.contXcategoria{
+/* .contXcategoria{
     display: flex;
     flex-wrap: wrap;
-}
-
+} */
+/* 
 .contXcategoria__subcontainer{
     width: 250px;
     position: relative;
@@ -54,6 +54,7 @@ section.home{
     text-align: center;
     margin: 20px auto;
 }
+
 .contXcategoria--img{
     width: 250px;
     margin-bottom: 30px;
@@ -61,7 +62,7 @@ section.home{
 
 .contXcategoria--infoLibro{
     word-break: break-all;
-}
+} */
 
 .contXcategoria--iconProductos .svg-inline--fa {
     position: absolute;

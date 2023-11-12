@@ -6,11 +6,13 @@ import { BrowserRouter } from 'react-router-dom';
 import { CounterProvider } from "./pages/delivery/Context";
 import { GoUpProvider } from './contexts/GoUp/GoUpContext';
 import { MenuProvider } from './contexts/MenuContext/MenuContext';
+import { ShoppingCartProvider } from './contexts/CarritoContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
+      <ShoppingCartProvider>
+      <BrowserRouter>
       <GoUpProvider>
       <MenuProvider>
       <CounterProvider>
@@ -18,7 +20,8 @@ root.render(
       </CounterProvider>
       </MenuProvider>
       </GoUpProvider>
-    </BrowserRouter>
+      </BrowserRouter>
+      </ShoppingCartProvider>
   </React.StrictMode>
 );
 

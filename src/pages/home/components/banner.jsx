@@ -17,13 +17,16 @@ const StyledMain = styled.section`
 const Banner = () => {
     return (
         <>
-            <StyledMain>
-                    <h1>PC <br/><span>Master</span> <br/>Race</h1>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt neque 
-                        expedita atque eveniet <br/> quis nesciunt. Quos nulla vero consequuntur, fugit nemo ad delectus 
-                    <br/> a quae totam ipsa illum minus laudantium?</p>
-            </StyledMain>
-        </>
+            {/* <StyledMain>
+                    
+            </StyledMain> */}
+            <section className="bg-slate-500 w-full text-white p-5 mb-5">
+                <h1 className="text-5xl">PC <br/><span>Master</span> <br/>Race</h1>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt neque 
+                            expedita atque eveniet <br/> quis nesciunt. Quos nulla vero consequuntur, fugit nemo ad delectus 
+                        <br/> a quae totam ipsa illum minus laudantium?</p>
+            </section >
+            </>
     )
 }
 

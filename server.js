@@ -28,7 +28,7 @@ db.connect((err) => {
 
 // Controlador para listar libros
 app.get('/api/list_vent_lbrs', (req, res) => {
-  const sql = 'SELECT lbr_isbn, lbr_titulo, lbr_editorial, lbr_autor, lbr_portada FROM libro';
+  const sql = 'SELECT * FROM libro';
   db.query(sql, (err, result) => {
     if (err) {
       handleError(res, err);

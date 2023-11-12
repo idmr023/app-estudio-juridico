@@ -65,10 +65,9 @@ En este pryecto he querido combinar todas las tecnlogías que conozco hasta el m
 <!-- ROADMAP -->
 ## Actualizaciones
 
-- [ ] Página 404 estilizada completamente
-- [ ] Página contacto envía correos
-- [ ] Claves almacenadas dentro de variables de entornos
-- [ ] Página ayuda funcional al 100%   
+- [ ] Nueva página productos
+- [ ] Tailwind CSS incluido
+- [ ] Página funcional
 
 Click en [open issues](https://https://github.com/idmr023/Libreria/issues) para una lista de todas las funcionalidades propuests.
 

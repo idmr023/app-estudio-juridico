@@ -1,5 +1,4 @@
-import "../css/estilos_nproductos.css";
-
+import "../../css/estilos_nproductos.css";	
 export function Banner () {
     return (
     <section className="home">
