@@ -1,27 +1,14 @@
 import CardGroup from 'react-bootstrap/CardGroup';
-import styled from "styled-components";
 import Card from 'react-bootstrap/Card';
-import { BannerCard } from './components/bannerCard';
 import { faAddressBook, faMoneyBill1, faStar, faTruckFast } from '@fortawesome/free-solid-svg-icons';
-import { Banner } from './components/banner';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const BannerCards = styled.div`
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 40px;
-`
-const StyledCard = styled(Card)`
-    background-color : 'transparent';
-    border: 0;
-    text-align: 'center';
-    align-items: 'center';
-    margin: 50px;
-    .card-img-top{
-        width: 300px; 
-        height: 320px;
-        margin: 0 auto;
-    }
-`
+const BannerCard = ({ imagen, descripcion, estiloColor}) => (
+    <div className="relative text-center mx-auto">
+        <FontAwesomeIcon className="absolute left-full w-8 h-30 ml-3 mt-1" icon={imagen} style={estiloColor} />
+        <p>{descripcion}</p>
+    </div>
+);
 
 function Home() {
 
@@ -46,29 +33,33 @@ function Home() {
     ]
 
     const Carta = ({ img, title, text}) => { 
-        
         return (
-            <StyledCard>
-                <Card.Img variant="top" src={img}/>
+            <div  className='mb-11 bg-transparent border-0 text-center items-center m-12'>
+                <Card.Img className='flex w-72 h-80 mx-auto' variant="top" src={img}/>
                 <Card.Body>
                     <Card.Title>{title}</Card.Title>
                     <Card.Text>{text}</Card.Text>
                 </Card.Body>
-            </StyledCard>
+            </div>
         )
     }
 
 return (
     <>
-        <Banner />
+        <section className="bg-slate-500 w-full text-white p-5 mb-5">
+            <h1 className="text-5xl">PC <br/><span>Master</span> <br/>Race</h1>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt neque 
+                        expedita atque eveniet <br/> quis nesciunt. Quos nulla vero consequuntur, fugit nemo ad delectus 
+                    <br/> a quae totam ipsa illum minus laudantium?</p>
+        </section >
 
         <section>
-            <h3>Productos para ti</h3>
-            <BannerCards>
+            <h3 className='text-3xl ml-3'>Productos para ti</h3>
+            <div className='flex justify-between mt-3 mb-11'>
                 {bannerCardData.map((data, index) => (
                 <BannerCard key={index} imagen={data.icono} estiloColor={data.estiloColor} descripcion={data.descripcion} />
                 ))}
-            </BannerCards>
+            </div>
             {
                 <CardGroup>
                     {cardData.map((data, index) => (

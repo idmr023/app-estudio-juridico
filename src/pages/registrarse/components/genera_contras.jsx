@@ -1,7 +1,7 @@
 import Card from 'react-bootstrap/Card';    
 import styled from 'styled-components';
-import { BotonSbt, BotonSbt2 } from '../../../componentes/UI/form/botones';
-import { FrmInput, Formulario } from '../../../componentes/UI/form/form';
+import { BotonSbt, BotonSbt2 } from '../../../componentes/UI/Botones/';
+import { FrmInput, Formulario } from '../../../componentes/UI/Form/form';
 
 function encriptar(){
     let texto = document.getElementById('input__msj').value.toString();

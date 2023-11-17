@@ -1,12 +1,13 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext} from "react"
 import { ShoppingCartContext } from "../../../../contexts/CarritoContext"
-import { AddIcon, CheckIcon } from "../../../../Icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faCheck, faPlus } from "@fortawesome/free-solid-svg-icons"
 
 const AddItemButton = ({ isInCart, onItemAdded }) => {
   if ( isInCart ) {
     return (
       <div className="absolute top-0 right-0 flex justify-center items-center bg-black w-6 h-6 rounded-full m-2 p-1">
-        <CheckIcon className="w-6 h-6 text-white" />
+        <FontAwesomeIcon className="w-6 h-6 text-white cursor-pointer"  icon={faCheck}/>
       </div>
     )
   }
@@ -16,7 +17,7 @@ const AddItemButton = ({ isInCart, onItemAdded }) => {
       className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1"
       onClick={onItemAdded}
     >
-      <AddIcon className="w-6 h-6 text-black" />
+      <FontAwesomeIcon className="text-black cursor-pointer"  icon={faPlus} />
     </div>
   )
 }

@@ -1,6 +1,4 @@
-import { Container } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
-import styled from 'styled-components';
 export function PagAyuda() {
   
   const qyaData = [
@@ -56,14 +54,9 @@ export function PagAyuda() {
     },
   ];
 
-  const ContainerStyled = styled(Container)`
-    margin: 50px auto;
-    text-align: center;
-  `
-
   return (
     <>
-      <ContainerStyled >
+      <div className='mx-8 my-16 text-center'>
         <h1>Preguntas frecuentes</h1>
         <Accordion defaultActiveKey="0" flush>
         {qyaData.map((dato) => (
@@ -73,7 +66,7 @@ export function PagAyuda() {
           </Accordion.Item>
         ))}
       </Accordion>
-    </ContainerStyled>
+    </div>
     </>
   );
 }

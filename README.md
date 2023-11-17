@@ -57,7 +57,6 @@ En este pryecto he querido combinar todas las tecnlogías que conozco hasta el m
 * [![React][React.js]][React-url]
 * [![Bootstrap][Bootstrap.com]][Bootstrap-url]
 * [![Tailwind][Tailwind.css]][Tailwind-url]
-* [![SyledComponents][StyledComponents.css]][StyledComponents-url]
 * [![MYSQL][MYSQL.io]][MYSQL-url]
 
 
@@ -65,9 +64,9 @@ En este pryecto he querido combinar todas las tecnlogías que conozco hasta el m
 <!-- ROADMAP -->
 ## Actualizaciones
 
-- [ ] Nueva página productos
-- [ ] Tailwind CSS incluido
-- [ ] Página funcional
+- [ ] Todo el CSS y StyledComponents convertido en TailWind
+- [ ] SVG ahora son FontAwesome
+- [ ] SubMenu dropdown Productos, SubMenu Login, SignOut a un costado
 
 Click en [open issues](https://https://github.com/idmr023/Libreria/issues) para una lista de todas las funcionalidades propuests.
 
@@ -107,8 +106,6 @@ Link del proyecto: [https://github.com/idmr023/Libreria](https://github.com/idmr
 [Vite-url]: https://vitejs.dev
 [Tailwind.css]: https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white
 [Tailwind-url]: https://tailwindcss.com
-[StyledComponents.css]: https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white
-[StyledComponents-url]: https://styled-components.com->
 [JS.io]: https://shields.io/badge/JavaScript-F7DF1E?logo=JavaScript&logoColor=000&style=flat-square
 [JS-url]: https://developer.mozilla.org/es/docs/Web/JavaScript
 [MYSQL.io]: https://img.shields.io/badge/-MySQL-4479A1?style=flat-square&logo=mysql&labelColor=4479A1&logoColor=FFF

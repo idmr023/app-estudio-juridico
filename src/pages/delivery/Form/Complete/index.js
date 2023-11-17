@@ -1,10 +1,5 @@
 import React from "react";
-import styled from "styled-components";
 import { Box, Typography } from "@mui/material";
-
-const Img = styled.img`
-  width: 70%;
-`;
 
 const Complete = () => {
   return (
@@ -17,7 +12,7 @@ const Complete = () => {
       }}
     >
       <Typography variant="h4">!Gracias por tu registro¡</Typography>
-      <Img src="/complete.png" />
+      <Img className="w-16" src="/complete.png" />
     </Box>
   );
 };

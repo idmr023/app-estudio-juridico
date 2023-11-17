@@ -1,37 +1,16 @@
-import styled from "styled-components";
-import "./css/estilos_contacto.css";
 import { Content } from "./components/Content";
 import { ContactInfo } from "./components/ContactInfo";
-
-const SectionContact = styled.section`
-    display: flex;
-    min-height: 100vh;
-    padding: 50px 100px;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    flex-wrap: wrap;
-    background-color: var(--soft-grey);
-`
-
-const ContainerInfo = styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 30px;
-`
 
 function Contacto (){    
 
     return (
         <>
-            <SectionContact className="contact">
+            <section className="flex min-h-screen py-12 px-24 justify-center items-center flex-col flex-wrap bg-gray-200">
                 <Content/>
-                <ContainerInfo className="container">
+                <div className="w-full flex justify-center items-center mt-7">
                     <ContactInfo/>
-                </ContainerInfo>
-            </SectionContact>
+                </div>
+            </section>
             
         </>
     )

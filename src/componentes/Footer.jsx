@@ -6,7 +6,6 @@ const StyledFooter = styled.footer`
     background: var(--soft-green);
     padding: 60px 0 30px 0;
     width: 100%;
-}
     .container__footer{
         border-bottom: 1px solid #ccc;
         justify-content: space-between;

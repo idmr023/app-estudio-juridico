@@ -10,7 +10,7 @@ import "./App.css"
 
 function App() {
   const {
-    rutas,
+    rutasCombinadas,
   } = useContext(MenuContext)
   
   library.add(faArrowUp);
@@ -21,7 +21,7 @@ function App() {
               <Menu />
 
               <Routes>
-                {rutas.map((ruta) => (
+                {rutasCombinadas.map((ruta) => (
                   <Route 
                     key={ruta.key} 
                     path={ruta.path} 

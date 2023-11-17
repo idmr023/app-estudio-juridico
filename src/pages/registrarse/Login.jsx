@@ -3,8 +3,8 @@ import styled from "styled-components";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { validation } from "./components/LoginValidation";
-import { FormContainer, Formulario, FrmInput } from "../../componentes/UI/form/form";
-import { BotonSbt, BotonSbt2} from "../../componentes/UI/form/botones";
+import { FormContainer, Formulario, FrmInput } from "../../componentes/UI/Form/form";
+import { BotonSbt, BotonSbt2} from "../../componentes/UI/Botones/";
 
 const StyledContent = styled.div`
     text-align: center;

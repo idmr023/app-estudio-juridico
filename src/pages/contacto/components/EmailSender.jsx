@@ -1,15 +1,13 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import "../css/estilos_contacto.css";
-import {Formulario, FrmInput} from '../../../componentes/UI/form/form';
-import { BotonSbt as Boton } from '../../../componentes/UI/form/botones';
+import {Formulario, FrmInput} from '../../../componentes/UI/Form/form'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { Form } from 'react-bootstrap';
-import {FormContainer} from "../../../componentes/UI/form/form";
+import {FormContainer} from "../../../componentes/UI/Form/form";
+import { BotonSbt as Boton } from '../../../componentes/UI/Botones';
 function EmailSender({scrollToTop, showButton}) {
   const [emailResponse, setEmailResponse] = useState(null);
-  const [contenido, setContenido] = useState('');
 
   const texto = ` <style>
       @import url("https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins:wght@300&display=swap");
@@ -79,7 +77,7 @@ function EmailSender({scrollToTop, showButton}) {
 
   return (
     <FormContainer>
-      <Formulario className="contactForm">
+      <Formulario>
             <h2>Envía un mensaje</h2>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Nombre completo</Form.Label> <br/>
