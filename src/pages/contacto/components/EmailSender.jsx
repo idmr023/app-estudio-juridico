@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import {Formulario, FrmInput} from '../../../componentes/UI/Form/form'; 
+import {Formulario, FrmInput} from '../../../componentes/UI/Form'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { Form } from 'react-bootstrap';
-import {FormContainer} from "../../../componentes/UI/Form/form";
+import {FormContainer} from "../../../componentes/UI/Form";
 import { BotonSbt as Boton } from '../../../componentes/UI/Botones';
 function EmailSender({scrollToTop, showButton}) {
   const [emailResponse, setEmailResponse] = useState(null);

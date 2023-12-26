@@ -1,4 +1,5 @@
-import { CalendarIcon, DolarIcon } from "../../../../Icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faCalendarDays, faDollarSign } from "@fortawesome/free-solid-svg-icons"
 
 const OrdersCard = ({id, totalPrice, totalProducts, dateTime}) => {
 return (
@@ -9,7 +10,7 @@ return (
             <hr/>
             <div className="flex justify-between">
                 <div className="flex items-center gap-2">
-                    <CalendarIcon/>
+                    <FontAwesomeIcon icon={faCalendarDays} />
                     <p className="m-4">Fecha de compra: <br/> {dateTime()}</p>
                 </div>
 
@@ -18,7 +19,7 @@ return (
                 </div>
 
                 <div className="flex items-center gap-2">
-                    <DolarIcon className="inline" /> 
+                    <FontAwesomeIcon icon={faDollarSign} className="inline" /> 
                     <span className="m-4">Precio total: S/{totalPrice}</span>
                 </div>
             </div>

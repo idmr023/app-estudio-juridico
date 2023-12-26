@@ -10,7 +10,7 @@ const BannerCard = ({ imagen, descripcion, estiloColor}) => (
     </div>
 );
 
-function Home() {
+export function Home() {
 
 
     const bannerCardData = [
@@ -73,11 +73,6 @@ return (
                 </CardGroup>
             }
         </section>
-
-        
-        {/* <Chatbot /> */}
     </>
     );
 }
-
-export default Home

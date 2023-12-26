@@ -1,17 +1,17 @@
 import { useContext } from "react"
 import { Link } from "react-router-dom"
 import { ShoppingCartContext } from "../../../../contexts/CarritoContext"
-import { CloseIcon } from "../../../../Icons" 
 import { totalPrice } from "../../../../utils"
 import OrderCard from "../OrderCard"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faXmark } from "@fortawesome/free-solid-svg-icons"
 
 const CheckoutSideMenu = () => {
     const context = useContext(ShoppingCartContext)
 
     const handleDelete = (id) => {
-        const filteredProducts = context.cartProducts.filter(libros => libros.lbr_isbn !== id)
+        const filteredProducts = context.cartProducts.filter(libro => libro.lbr_isbn !== id)
         context.setCartProducts(filteredProducts)
-        context.setCounter(context.counter - 1)
     }
 
     const handleCheckout = () => {
@@ -36,7 +36,7 @@ const CheckoutSideMenu = () => {
             <div className="">
                 <h2 className="">My Order</h2>
                 <div onClick={() => context.closeCheckoutSideMenu()}>
-                    <CloseIcon/>
+                    <FontAwesomeIcon icon={faXmark} />
                 </div>
             </div>
             <div className="">

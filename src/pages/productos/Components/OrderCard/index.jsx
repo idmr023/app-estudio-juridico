@@ -1,13 +1,13 @@
 // import PropTypes from 'prop-types'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { CloseIcon } from "../../../../Icons"
-import { faPlus } from "@fortawesome/free-solid-svg-icons"
+import { faXmark } from "@fortawesome/free-solid-svg-icons"
 
 const OrderCard = ({id, title, images, price, handleDelete }) => {
     let renderIcon
     
     if(handleDelete){
-        renderIcon = <CloseIcon/>
+        renderIcon = <FontAwesomeIcon icon={faXmark} onClick={() => handleDelete(id)} className='h-6 w-6 text-black cursor-pointer'/>
+        
     }
 
 return (
@@ -20,7 +20,7 @@ return (
             </div>
             <div className="flex items-center gap-2">
                 <p className="text-lg font-medium">${price}</p>
-                <FontAwesomeIcon className="cursor-pointer" onClick={() => handleDelete(id)} icon={faPlus} />
+                <button onClick={() => handleDelete(id)}>Delete</button>
             </div>
         </div>
     )

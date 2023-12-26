@@ -38,7 +38,6 @@ export default function Card({ data }) {
     const existingProduct = context.cartProducts.find((libro) => libro.lbr_isbn === data.lbr_isbn);
   
     if (existingProduct) {
-      // Product is already in the cart, update quantity and price
       const updatedCartProducts = context.cartProducts.map((libro) =>
         libro.lbr_isbn === data.lbr_isbn
           ? { ...libro, quantity: libro.quantity + 1, totalPrice: libro.totalPrice + data.price }
@@ -47,7 +46,6 @@ export default function Card({ data }) {
   
       context.setCartProducts(updatedCartProducts);
     } else {
-      // Product is not in the cart, add it
       const newCartProduct = {
         ...data,
         quantity: 1,
@@ -94,9 +92,6 @@ export default function Card({ data }) {
           <div className="break-all">
               <h2>{ titleProduct() }</h2>
               <p>{data.lbr_autor}</p>
-              <span className="absolute bottom-0 left-0 bg-white/60 rounded-full text-black text-xs px-3 py-1 m-2">
-                { data.lbr_genero }
-              </span>
               <p>S/ { data.lbr_precio }</p>
           </div>
         </div>

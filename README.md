@@ -64,9 +64,16 @@ En este pryecto he querido combinar todas las tecnlogías que conozco hasta el m
 <!-- ROADMAP -->
 ## Actualizaciones
 
-- [ ] Todo el CSS y StyledComponents convertido en TailWind
-- [ ] SVG ahora son FontAwesome
-- [ ] SubMenu dropdown Productos, SubMenu Login, SignOut a un costado
+- Implementada creación de foto de perfil mediante API
+- Registro de sesión arreglado (se recargaba por defecto)
+- Todo el CSS y StyledComponents convertido a TailWind
+- Todos los iconos ahora son usados con Font Awesome
+- Los datos del usuario son insertados en un localStorage, para más adelante poder llamarlos desde cualquier lado y así hacer la sección cuenta. También se ingresan en la base de datos
+- Rutas protegidas. Si el usuario no ha iniciado sesión, no puede ingresar a la parte de productos.
+- Botón para cerrar sesión
+- Bug de renderizado infinito solucionado.
+- Vista de la cuenta del usuario (avanzar con esto, con una sesión activa) terminada.
+- Arreglado : Generar contraseña no aparecía
 
 Click en [open issues](https://https://github.com/idmr023/Libreria/issues) para una lista de todas las funcionalidades propuests.
 

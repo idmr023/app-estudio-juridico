@@ -38,10 +38,31 @@ app.get('/api/list_vent_lbrs', (req, res) => {
   });
 });
 
+// Controlador para listar cliente de un usuario específico según su DNI
+app.get('/api/list_usr/:dni', (req, res) => {
+  const dni = req.params.dni;
+  const sql = 'SELECT * FROM usuario WHERE usr_dni = ?'; // Ajusta la columna según tu esquema de base de datos
+  db.query(sql, [dni], (err, result) => {
+    if (err) {
+      handleError(res, err);
+      return;
+    }
+    res.json(result);
+  });
+});
+
+//Función para insertar imagen de perfil por defecto
+function usrIMG(nombre){
+  const imageUrl = `https://ui-avatars.com/api/?background=random&name=${encodeURIComponent(nombre)}`;
+  return imageUrl;
+}
+
 // Controlador para registrar usuario
-app.post('/api/signup', (req, res) => {
-  const sql = 'INSERT INTO usuario (`usr_nom`, `usr_dni`, `usr_email`, `usr_pswd`) VALUES(?)';
-  const values = [req.body.name, req.body.dni, req.body.email, req.body.password];
+app.post('/api/signup', async (req, res) => {
+
+  const sql = 'INSERT INTO usuario (`usr_nom`, `usr_dni`, `usr_email`, `usr_pswd`, `usr_img`) VALUES(?)';
+  const values = [req.body.name, req.body.dni, req.body.email, req.body.password, usrIMG(req.body.name)];
+  
   db.query(sql, [values], (err, data) => {
     if (err) {
       handleError(res, err);

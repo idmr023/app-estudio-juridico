@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
-const GlobalStyle = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle`
   :root{
     --color-principal: rgba(42, 122, 228, 1);
     --gris: #F5F5F5;
@@ -31,5 +31,3 @@ const GlobalStyle = createGlobalStyle`
     justify-content: space-between;
   }
 `
-
-export default GlobalStyle

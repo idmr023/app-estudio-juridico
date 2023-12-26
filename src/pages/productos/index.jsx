@@ -1,28 +1,24 @@
 import React, { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
-import Card from "./Components/Card";
-import { ShoppingCartContext } from "../../contexts/CarritoContext";
-import ProductDetail from "./Components/ProductDetail"
-import CheckoutSideMenu from "./Components/CheckoutSideMenu"
 import { GoUpContext } from "../../contexts/GoUp/GoUpContext";
-import { Banner } from "./Components/Banner/Banner";
+import { ShoppingCartContext } from "../../contexts/CarritoContext";
+import { Banner } from "./Components/Banner";
+import CheckoutSideMenu from "./Components/CheckoutSideMenu"
+import ProductDetail from "./Components/ProductDetail"
 import Layout from "./Components/Layout";
+import Card from "./Components/Card";
 
 export const Productos = () => {
     
     const context = useContext(ShoppingCartContext)
-    
-    const {
-        showButton,
-        scrollToTop,
-    } = useContext(GoUpContext)
+    const { showButton, scrollToTop, } = useContext(GoUpContext)
 
     const renderView = () => {
         if (context.filteredItems?.length > 0) {
         return (
             context.filteredItems?.map(libros => (
-            <Card key={libros.lbr_isbn} data={libros} />
+                <Card key={libros.lbr_isbn} data={libros} />
             ))
         )
         } else {
@@ -31,7 +27,7 @@ export const Productos = () => {
         )
         }
     };
-
+    
     const IconoSubir = ({showButton, scrollToTop}) => {
         return (
             <div className="productos_iconUp">

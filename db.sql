@@ -26,14 +26,16 @@ CREATE TABLE usuario (
     usr_nom VARCHAR(30),
     usr_ape VARCHAR(30),
     usr_pswd VARCHAR(30),
-    usr_email VARCHAR(30)
+    usr_email VARCHAR(30),
+    usr_img VARCHAR(100),
+    usr_listDeseados VARCHAR(400)
 );
 
 -- Inserción de datos en la tabla 'usuario'
-INSERT INTO usuario (usr_dni, usr_nom, usr_ape, usr_pswd, usr_email) VALUES
-    (111111111, 'Usuario 1', 'Apellido 1', 'clave1', 'usuario1@example.com'),
-    (222222222, 'Usuario 2', 'Apellido 2', 'clave2', 'usuario2@example.com'),
-    (333333333, 'Usuario 3', 'Apellido 3', 'clave3', 'usuario3@example.com');
+INSERT INTO usuario (usr_dni, usr_nom, usr_ape, usr_pswd, usr_email, usr_img, usr_listDeseados) VALUES
+    (111111111, 'Usuario 1', 'Apellido 1', 'clave1', 'usuario1@example.com', '', ''),
+    (222222222, 'Usuario 2', 'Apellido 2', 'clave2', 'usuario2@example.com', '', ''),
+    (333333333, 'Usuario 3', 'Apellido 3', 'clave3', 'usuario3@example.com', '', '');
 -- Agregar más datos de usuarios aquí
 
 -- Creación de la tabla 'libro'

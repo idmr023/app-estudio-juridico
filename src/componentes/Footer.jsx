@@ -1,68 +1,33 @@
-import styled from "@emotion/styled"
-
-const StyledFooter = styled.footer`
-    display: block;
-    justify-content: space-between;
-    background: var(--soft-green);
-    padding: 60px 0 30px 0;
-    width: 100%;
-    .container__footer{
-        border-bottom: 1px solid #ccc;
-        justify-content: space-between;
-        display: flex;
-        flex-wrap: wrap;
-        text-align: center;
-    }
-    .container__footer .content-foo .nosotros a{
-        color: #000;
-    }
-    .container__footer div{
-        margin: 0 20px 0 20px ;
-    }
-
-    .content-foo h4{
-        border-bottom: 3px solid var(--soft-red);
-        padding-bottom: 5px;
-        margin-bottom: 10px;
-    }
-
-    .titulo-final{
-        text-align: center;
-        font-size: 24px;
-        margin: 20px 0 0 0;
-    }
-`
-
-export default function Footer() {
+export function Footer() {
     return (
-        <StyledFooter>
-                <div className="container__footer">
-                    <div className="content-foo">
+        <footer className="block justify-between bg-slate-400 py-16 pb-7 w-full">
+                <div className="border-b border-solid border-gray-300 justify-between flex flex-wrap text-center">
+                    <div className="text-black m-0 mx-20">
                         <h4>Nosotros</h4>
                         <ul className="nosotros">
-                            <li><a className = "sub" href="ayuda.php">Ayuda</a></li>
-                            <li><a className = "sub" href="nosotros.php">Nosotros</a></li>
+                            <li><a className = "sub" href="">Ayuda</a></li>
+                            <li><a className = "sub" href="">Nosotros</a></li>
                         </ul>
                     </div>
 
                     <div className="content-foo">
-                        <h4>Email</h4>
+                        <h4 className="border-b-3 border-slate-900 pb-1 mb-3">Email</h4>
                         <p>Bancoutp@utp.edu.pe</p>
                     </div>
                     
                     <div className="content-foo">
-                        <h4>Ubicanos</h4>
+                        <h4 className="border-b-3 border-slate-900 pb-1 mb-3">Ubicanos</h4>
                         <p>Av. Arequipa</p>
                     </div>
                 
                     <div className="content-foo">
-                        <h4>Numero de Contacto</h4>
+                        <h4 className="border-b-3 border-slate-900 pb-1 mb-3">Numero de Contacto</h4>
                         <p>+54 945 875 635</p>
                     </div>
                 </div>
 
-                <h2 className="titulo-final">&copy; | Banco Chanchito UTP </h2>
+                <h2 className="text-center text-2xl mt-20">&copy; | Banco Chanchito UTP </h2>
         
-        </StyledFooter>
+        </footer>
     )
 }

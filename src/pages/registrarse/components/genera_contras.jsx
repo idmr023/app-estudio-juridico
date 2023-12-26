@@ -1,7 +1,7 @@
 import Card from 'react-bootstrap/Card';    
 import styled from 'styled-components';
 import { BotonSbt, BotonSbt2 } from '../../../componentes/UI/Botones/';
-import { FrmInput, Formulario } from '../../../componentes/UI/Form/form';
+import { FrmInput, Formulario } from '../../../componentes/UI/Form';
 
 function encriptar(){
     let texto = document.getElementById('input__msj').value.toString();
@@ -25,14 +25,14 @@ function procesarDesenscriptar(){
     document.getElementById('mostrar_texto').value = " ";
 }
         
-function copiarAlPortapapeles(id_elemento) {
+const copiarAlPortapapeles = (id_elemento) => {
     var aux = document.createElement("input");
-    aux.setAttribute("value", document.getElementById("mostrar_texto").value);
+    aux.setAttribute("value", document.getElementById(id_elemento).value);
     document.body.appendChild(aux);
     aux.select();
     document.execCommand("copy");
     document.body.removeChild(aux);
-}
+};
 
 const Contenedor = styled.div`
     position: fixed;
@@ -58,7 +58,7 @@ const Contenido = () => {
                             <BotonSbt onClick={encriptar}>Encriptar</BotonSbt>
                             <div>
                                 <FrmInput type="text" placeholder="Texo encriptado" id="mostrar_texto" name="mostrar_texto"/>
-                                <BotonSbt2 onClick={copiarAlPortapapeles}>Copiar</BotonSbt2>
+                                <BotonSbt2 onClick={() => copiarAlPortapapeles('mostrar_texto')}>Copiar</BotonSbt2>
                                 <BotonSbt onClick={procesarDesenscriptar}>Desencriptar</BotonSbt>
                             </div>
 

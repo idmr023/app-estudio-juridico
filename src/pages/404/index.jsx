@@ -1,8 +1,8 @@
-import {ParticlesBackground} from "./components/ParticlesBG";
-import {BotonSbt2} from "../../componentes/UI/Botones/";
+import { ParticlesBackground } from "./components/ParticlesBG";
+import { BotonSbt2 } from "../../componentes/UI/Botones/";
 import { Link } from "react-router-dom";
 
-function Page404 (){
+export function Page404 (){
 
     return (
         <>
@@ -17,5 +17,3 @@ function Page404 (){
 
     );
 }
-
-export default Page404

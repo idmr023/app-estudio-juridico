@@ -1,6 +1,7 @@
 import { useContext } from "react"
 import { ShoppingCartContext } from "../../../../contexts/CarritoContext"
-import { CloseIcon } from "../../../../Icons" 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faXmark } from "@fortawesome/free-solid-svg-icons"
 
 const ProductDetail = () => {
     const context = useContext(ShoppingCartContext)
@@ -11,10 +12,9 @@ const ProductDetail = () => {
             className="flex-col fixed right-0 border bg-white border-black rounded-lg overflow-y-scroll w-[360px] h-[calc(100vh-80px)]">
             <div className="flex justify-between item-center p-6">
                 <h2 className="font-medium text-xl">Detail</h2>
-                <div onClick={() => context.closeProductDetail()}><CloseIcon/></div>
+                <div onClick={() => context.closeProductDetail()}><FontAwesomeIcon icon={faXmark}/></div>
             </div>
             <figure className="px-6">
-                {/* width y high del padre */}
                 <img 
                     className="w-full h-full rounded-lg" 
                     src={context.productToShow.images} 
