@@ -1,8 +1,8 @@
 export function Footer() {
     return (
         <footer className="block justify-between bg-slate-400 py-16 pb-7 w-full">
-                <div className="border-b border-solid border-gray-300 justify-between flex flex-wrap text-center">
-                    <div className="text-black m-0 mx-20">
+                <div className="border-b border-solid border-gray-300 justify-between flex flex-wrap text-center  m-10">
+                    <div className="">
                         <h4>Nosotros</h4>
                         <ul className="nosotros">
                             <li><a className = "sub" href="">Ayuda</a></li>
@@ -26,7 +26,7 @@ export function Footer() {
                     </div>
                 </div>
 
-                <h2 className="text-center text-2xl mt-20">&copy; | Banco Chanchito UTP </h2>
+                <h2 className="text-center text-2xl mt-20">&copy; | Libreria </h2>
         
         </footer>
     )

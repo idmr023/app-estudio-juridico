@@ -1,5 +1,3 @@
-import CardGroup from 'react-bootstrap/CardGroup';
-import Card from 'react-bootstrap/Card';
 import { faAddressBook, faMoneyBill1, faStar, faTruckFast } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -11,7 +9,6 @@ const BannerCard = ({ imagen, descripcion, estiloColor}) => (
 );
 
 export function Home() {
-
 
     const bannerCardData = [
         { icono: faTruckFast, descripcion: 'Entrega rápida', estiloColor: {color: '#2E6266'}},
@@ -34,12 +31,12 @@ export function Home() {
 
     const Carta = ({ img, title, text}) => { 
         return (
-            <div  className='mb-11 bg-transparent border-0 text-center items-center m-12'>
-                <Card.Img className='flex w-72 h-80 mx-auto' variant="top" src={img}/>
-                <Card.Body>
-                    <Card.Title>{title}</Card.Title>
-                    <Card.Text>{text}</Card.Text>
-                </Card.Body>
+            <div  className='bg-transparent border-0 text-center w-96'>
+                <img className='flex w-72 mx-auto' src={img} variant="top"/>
+                <div className='m-10'>
+                    <h1 className='text-2xl'>{title}</h1>
+                    <p>{text}</p>
+                </div>
             </div>
         )
     }
@@ -47,7 +44,7 @@ export function Home() {
 return (
     <>
         <section className="bg-slate-500 w-full text-white p-5 mb-5">
-            <h1 className="text-5xl">PC <br/><span>Master</span> <br/>Race</h1>
+            <h1 className="text-5xl">Proyecto <br/><span>Librería</span></h1>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt neque 
                         expedita atque eveniet <br/> quis nesciunt. Quos nulla vero consequuntur, fugit nemo ad delectus 
                     <br/> a quae totam ipsa illum minus laudantium?</p>
@@ -55,13 +52,13 @@ return (
 
         <section>
             <h3 className='text-3xl ml-3'>Productos para ti</h3>
-            <div className='flex justify-between mt-3 mb-11'>
+            <div className='flex justify-between m-5'>
                 {bannerCardData.map((data, index) => (
                 <BannerCard key={index} imagen={data.icono} estiloColor={data.estiloColor} descripcion={data.descripcion} />
                 ))}
             </div>
             {
-                <CardGroup>
+                <div className='flex justify-between'>
                     {cardData.map((data, index) => (
                         <Carta 
                             key ={index} 
@@ -70,7 +67,7 @@ return (
                             text={data.text}
                         />
                     ))}
-                </CardGroup>
+                </div>
             }
         </section>
     </>
