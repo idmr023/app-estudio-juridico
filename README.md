@@ -46,7 +46,7 @@
 <!-- ABOUT THE PROJECT -->
 ## Acerca del proyecto
 
-![webpage][webpage-screenshot]
+[![project-screenshot]]
 
 En este pryecto he querido combinar todas las tecnlogías que conozco hasta el momento. La página trata acerca de una biblioteca, esta tiene un catálogo de libros para prestar, así mismo esta biblioteca vende los libros.
 
@@ -119,3 +119,4 @@ Link del proyecto: [https://github.com/idmr023/Libreria](https://github.com/idmr
 [MYSQL-url]: https://www.mysql.com
 [Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
 [Bootstrap-url]: https://getbootstrap.com
+[project-screenshot]: images/mockup.png
