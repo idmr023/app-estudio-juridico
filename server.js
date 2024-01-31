@@ -7,6 +7,8 @@ if(process.env.NODE_ENV !== 'production'){
   require('dotenv').config();
 }
 
+const port = process.env.PORT || 3001;
+
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -127,6 +129,6 @@ function handleError(res, err) {
   res.status(500).send('Error interno del servidor');
 }
 
-app.listen(3001, () => {
+app.listen(port, () => {
   console.log('Servidor backend en ejecución en el puerto 3001');
 });
