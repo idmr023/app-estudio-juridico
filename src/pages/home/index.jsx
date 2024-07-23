@@ -44,7 +44,7 @@ export function Home() {
 return (
     <>
         <section className="bg-slate-500 w-full text-white p-5 mb-5">
-            <h1 className="text-5xl">Proyecto <br/><span>Librería</span></h1>
+            <h1 className="text-5xl">Tuercas <br/><span>Clavos y Tuercas</span></h1>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt neque 
                         expedita atque eveniet <br/> quis nesciunt. Quos nulla vero consequuntur, fugit nemo ad delectus 
                     <br/> a quae totam ipsa illum minus laudantium?</p>
