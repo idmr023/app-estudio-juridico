@@ -11,7 +11,7 @@ return (
             <div className="flex justify-between">
                 <div className="flex items-center gap-2">
                     <FontAwesomeIcon icon={faCalendarDays} />
-                    <p className="m-4">Fecha de compra: <br/> {dateTime()}</p>
+                    <p className="m-4">Fecha de compra: <br/> {dateTime}</p>
                 </div>
 
                 <div>

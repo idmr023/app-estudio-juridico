@@ -1,33 +1,35 @@
 export function Footer() {
     return (
-        <footer className="block justify-between bg-slate-400 py-16 pb-7 w-full">
-                <div className="border-b border-solid border-gray-300 justify-between flex flex-wrap text-center  m-10">
-                    <div className="">
-                        <h4>Nosotros</h4>
-                        <ul className="nosotros">
-                            <li><a className = "sub" href="">Ayuda</a></li>
-                            <li><a className = "sub" href="">Nosotros</a></li>
-                        </ul>
-                    </div>
-
-                    <div className="content-foo">
-                        <h4 className="border-b-3 border-slate-900 pb-1 mb-3">Email</h4>
-                        <p>Bancoutp@utp.edu.pe</p>
-                    </div>
-                    
-                    <div className="content-foo">
-                        <h4 className="border-b-3 border-slate-900 pb-1 mb-3">Ubicanos</h4>
-                        <p>Av. Arequipa</p>
-                    </div>
+        <footer className="bg-slate-800 text-white py-12 px-8 mt-24">
+            <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 border-b border-gray-600 pb-8">
                 
-                    <div className="content-foo">
-                        <h4 className="border-b-3 border-slate-900 pb-1 mb-3">Numero de Contacto</h4>
-                        <p>+54 945 875 635</p>
-                    </div>
+                <div>
+                    <h4 className="text-lg font-semibold mb-4">Sobre Nosotros</h4>
+                    <ul className="space-y-2">
+                        <li><a href="#" className="hover:underline">Ayuda</a></li>
+                        <li><a href="#" className="hover:underline">Nuestro Equipo</a></li>
+                    </ul>
                 </div>
 
-                <h2 className="text-center text-2xl mt-20">&copy; | Libreria </h2>
-        
+                <div>
+                    <h4 className="text-lg font-semibold mb-4">Correo</h4>
+                    <p>bancoutp@utp.edu.pe</p>
+                </div>
+
+                <div>
+                    <h4 className="text-lg font-semibold mb-4">Ubicación</h4>
+                    <p>Av. Arequipa 234<br />Cercado de Lima, Perú</p>
+                </div>
+
+                <div>
+                    <h4 className="text-lg font-semibold mb-4">Teléfono</h4>
+                    <p>+51 947 924 204</p>
+                </div>
+            </div>
+
+            <div className="mt-6 text-center text-gray-400 text-sm">
+                &copy; {new Date().getFullYear()} | IDMR
+            </div>
         </footer>
-    )
+    );
 }

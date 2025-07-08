@@ -1,23 +1,29 @@
-export const FormContainer = ({children}) =>{
+// FormUI.jsx
+
+export const FormContainer = ({ children }) => {
     return (
-        <div className="max-w-sm w-full mt-20 inline-flex items-center mx-auto sm:block">
+        <div className="max-w-md w-full mt-20 mx-auto px-4 sm:px-6 lg:px-8">
             {children}
         </div>
-    )
-}
+    );
+};
 
-export const Formulario = ({children}) =>{
+export const Formulario = ({ children, onSubmit }) => {
     return (
-        <form className="text-white w-full bg-gradient-to-t from-[rgba(0,0,0,0.8)] to-[rgba(0,0,0,0.8)] shadow-2xl px-20 py-20 rounded-2xl mb-20">
+        <form
+            onSubmit={onSubmit}
+            className="w-full bg-gray-800 text-gray-100 shadow-2xl px-8 py-10 sm:px-16 sm:py-14 rounded-2xl"
+        >
             {children}
         </form>
-    )
-}
+    );
+};
 
-export const FrmInput = ({children}) =>{
+export const FrmInput = (props) => {
     return (
-        <input className="h-10 bg-transparent border-b border-white border-solid border-t-0 border-r-0 border-l-0 text-white text-lg leading-6 tracking-wider mt-15 outline-none">
-            {children}
-        </input>
-    )
-}
+        <input
+            {...props}
+            className="w-full h-10 bg-transparent border-b border-gray-400 text-gray-100 text-lg tracking-wide outline-none focus:border-blue-400 transition-colors placeholder-gray-400"
+        />
+    );
+};

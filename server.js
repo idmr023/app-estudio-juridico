@@ -28,14 +28,11 @@ db.connect((err) => {
   console.log('Conexión a MySQL exitosa');
 });
 
-// Controlador para listar libros
-app.get('/api/list_vent_lbrs', (req, res) => {
-  const sql = 'SELECT * FROM libro';
+// Controlador para listar servicios
+app.get('/api/servicios', (req, res) => {
+  const sql = 'SELECT * FROM servicio';
   db.query(sql, (err, result) => {
-    if (err) {
-      handleError(res, err);
-      return;
-    }
+    if (err) return handleError(res, err);
     res.json(result);
   });
 });
@@ -61,7 +58,7 @@ function usrIMG(nombre){
 
 // Controlador para registrar usuario
 app.post('/api/signup', async (req, res) => {
-
+  console.log('Datos recibidos:', req.body); // <-- Esto te ayudará a ver si llegan los datos
   const sql = 'INSERT INTO usuario (`usr_nom`, `usr_dni`, `usr_email`, `usr_pswd`, `usr_img`) VALUES(?)';
   const values = [req.body.name, req.body.dni, req.body.email, req.body.password, usrIMG(req.body.name)];
   

@@ -1,6 +1,6 @@
 <a name="readme-top"></a>
 
-<h3 align="center">Proyecto Librería</h3>
+<h3 align="center">Proyecto Abogado</h3>
 
   <p align="center">
     Una biblioteca diferente
@@ -44,30 +44,25 @@ En este pryecto he querido combinar todas las tecnlogías que conozco hasta el m
 * [![Tailwind][Tailwind.css]][Tailwind-url]
 * [![MYSQL][MYSQL.io]][MYSQL-url]
 
-
-
 <!-- ROADMAP -->
 ## Actualizaciones
 
-- Implementada creación de foto de perfil mediante API
-- Registro de sesión arreglado (se recargaba por defecto)
-- Todo el CSS y StyledComponents convertido a TailWind
-- Todos los iconos ahora son usados con Font Awesome
-- Los datos del usuario son insertados en un localStorage, para más adelante poder llamarlos desde cualquier lado y así hacer la sección cuenta. También se ingresan en la base de datos
-- Rutas protegidas. Si el usuario no ha iniciado sesión, no puede ingresar a la parte de productos.
-- Botón para cerrar sesión
-- Bug de renderizado infinito solucionado.
-- Vista de la cuenta del usuario (avanzar con esto, con una sesión activa) terminada.
-- Arreglado : Generar contraseña no aparecía
+- Se adaptó todo el sistema de carrito para usar `servicios` en lugar de `libros`
+- Se actualizó la función `totalPrice()` para recorrer `servicios` usando `srv_precio`
+- Se mejoró la función `dateTime()` para retornar fecha local como `string`
+- Se corrigió bug en `OrdersCard` donde `dateTime()` se usaba como función, causando `TypeError`
+- Se rediseñó el botón `+` para añadir servicios y `✓` para eliminarlos del carrito
+- Se eliminó el comportamiento de mostrar detalles extra al quitar servicios; ahora solo se actualiza la lista
+- Se implementó `quantity` y `totalPrice` por cada servicio en el carrito
+- Se limpió el código y se eliminaron referencias a libros (`lbr_*`)
+- Se ajustaron las rutas y componentes (`MyOrder`, `OrderCard`, `OrdersCard`, etc.) para trabajar solo con `servicios`
 
-Click en [open issues](https://https://github.com/idmr023/Libreria/issues) para una lista de todas las funcionalidades propuests.
-
+Click en [open issues](https://github.com/idmr023/Libreria/issues) para una lista de todas las funcionalidades propuestas.
 
 <!-- LICENSE -->
 ## Licencia
 
 Distribuido bajo una licencia MIT. Vea `LICENSE.txt` para mayor información.
-
 
 <!-- CONTACT -->
 ## Contacto
@@ -79,29 +74,16 @@ Link del proyecto: [https://github.com/idmr023/Libreria](https://github.com/idmr
 <p align="right">(<a href="#readme-top">Volver a arriba</a>)</p>
 
 <!-- LINKS E IMÁGENES -->
-[contributors-shield]: https://img.shields.io/github/contributors/github_username/repo_name.svg?style=for-the-badge
-[contributors-url]: https://github.com/github_username/repo_name/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/github_username/repo_name.svg?style=for-the-badge
-[forks-url]: https://github.com/github_username/repo_name/network/members
-[stars-shield]: https://img.shields.io/github/stars/github_username/repo_name.svg?style=for-the-badge
-[stars-url]: https://github.com/github_username/repo_name/stargazers
-[issues-shield]: https://img.shields.io/github/issues/github_username/repo_name.svg?style=for-the-badge
-[issues-url]: https://github.com/github_username/repo_name/issues
-[license-shield]: https://img.shields.io/github/license/github_username/repo_name.svg?style=for-the-badge
-[license-url]: https://github.com/github_username/repo_name/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/ivan-daniel-manrique-roa-978a29187
-[webpage-screenshot]: images/screeenshot.png
+[project-screenshot]: images/mockup.png
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
 [Vite.js]: https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white
 [Vite-url]: https://vitejs.dev
 [Tailwind.css]: https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white
 [Tailwind-url]: https://tailwindcss.com
-[JS.io]: https://shields.io/badge/JavaScript-F7DF1E?logo=JavaScript&logoColor=000&style=flat-square
-[JS-url]: https://developer.mozilla.org/es/docs/Web/JavaScript
 [MYSQL.io]: https://img.shields.io/badge/-MySQL-4479A1?style=flat-square&logo=mysql&labelColor=4479A1&logoColor=FFF
 [MYSQL-url]: https://www.mysql.com
 [Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
 [Bootstrap-url]: https://getbootstrap.com
-[project-screenshot]: images/mockup.png

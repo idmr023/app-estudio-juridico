@@ -1,10 +1,10 @@
-/*
-*Se recorre todo el array y se acumula la suma de products.price dentro del acumulador acc. Considerando a 0 como el valor inicial
-*@param {Array} products cartProduct: Array of Objects
-*@returns {number} Total price
-*/
-export const totalPrice = (libros) => {
-    return libros.reduce((acc, libros) => acc + libros.lbr_precio, 0);
+/**
+ * Recorre el array de servicios y acumula el precio total.
+ * @param {Array} servicios - Array de objetos con propiedad srv_precio.
+ * @returns {number} Precio total.
+ */
+export const totalPrice = (servicios) => {
+    return servicios.reduce((acc, servicio) => acc + servicio.srv_precio, 0);
 }
 
 /**

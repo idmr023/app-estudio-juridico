@@ -3,11 +3,19 @@ import { v4 as uuidv4 } from 'uuid';
 import { Link } from "react-router-dom"
 import { ShoppingCartContext } from "../../../contexts/CarritoContext"
 import { dateTime } from "../../../utils";
-import Layout from "../Components/Layout"
 import OrdersCard from "../Components/OrdersCard"
 
 export function MyOrders() {
     const context = useContext(ShoppingCartContext)
+
+    const Layout = ({ children }) => {
+        return (
+            <div className="relative flex flex-col items-center mt-20">
+                {children}
+            </div>
+        );
+    };
+
     return (
     <>
         <Layout>

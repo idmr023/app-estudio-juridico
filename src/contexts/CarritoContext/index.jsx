@@ -1,110 +1,95 @@
 import axios from 'axios';
-import { useState, useEffect, createContext } from 'react'
+import { useState, useEffect, createContext } from 'react';
 
-export const ShoppingCartContext = createContext()
+export const ShoppingCartContext = createContext();
 
-export const initializeLocalStorage = () => {
-    const accountInLocalStorage = localStorage.getItem('account')
-    const signOutInLocalStorage = localStorage.getItem('sign-out')
-    let parsedAccount
-    let parsedSignOut
-
-    if (!accountInLocalStorage) {
-        localStorage.setItem('account', JSON.stringify({}))
-        parsedAccount = {}
-    } else {
-        parsedAccount = JSON.parse(accountInLocalStorage)
-    }
-
-    if (!signOutInLocalStorage) {
-        localStorage.setItem('sign-out', JSON.stringify(false))
-        parsedSignOut = false
-    } else {
-        parsedSignOut = JSON.parse(signOutInLocalStorage)
-    }
-}
 
 export function ShoppingCartProvider({ children }) {
     // My account
-    const [account, setAccount] = useState({})
+    const [account, setAccount] = useState({});
+    const [signOut, setSignOut] = useState(false);
 
-    // Sign out
-    const [signOut, setSignOut] = useState(false)
+    // Servicios
+    const [servicios, setServicios] = useState([]);
+    const [filteredItems, setFilteredItems] = useState(null);
 
-    const [filteredItems, setFilteredItems] = useState(null)
+    // Get services from backend
+    useEffect(() => {
+        axios.get('http://localhost:3001/api/servicios')
+            .then(response => setServicios(response.data))
+            .catch(error => console.error("Error al obtener servicios:", error));
+    }, []);
 
     useEffect(() => {
-        axios.get('http://localhost:3001/api/list_vent_lbrs')
-            .then(response => response.data)
-            .then(data =>
-                setLibros(data)
-            )
-    }, [filteredItems]);
+        const accountLS = JSON.parse(localStorage.getItem('account') || '{}');
+        const signOutLS = JSON.parse(localStorage.getItem('sign-out') || 'false');
+        setAccount(accountLS);
+        setSignOut(signOutLS);
+    }, []);
 
-    //Shopping Cart - Increment quantity
-    const [count, setCount] = useState(0)
-
-    // Product Detail - Open/Close
-    const [isProductDetailOpen, setIsProductDetailOpen] = useState(false) //Para cerrar y abrir es tan sencillo como poner una función o puesto y estilos embebidos que definan la clase
-    const openProductDetail = () => setIsProductDetailOpen(true)
-    const closeProductDetail = () => setIsProductDetailOpen(false)
-
-    // Product Detail - Open/Close
-    const [isCheckoutSideMenuOpen, setIsCheckoutSideMenuOpen] = useState(false) //Para cerrar y abrir es tan sencillo como poner una función o puesto y estilos embebidos que definan la clase
-    const openCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(true)
-    const closeCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(false)
-
-    // Product Detail - Show product
-    const [productToShow, setProductToShow] = useState(false)
-
-    //Shopping Cart - Add producs to cart
+    // Carrito
+    const [count, setCount] = useState(0);
     const [cartProducts, setCartProducts] = useState([]);
-
-    //Shopping Cart - Order
     const [order, setOrder] = useState([]);
 
-    // //Get products
-    const [libros, setLibros] = useState([]);
+    // Product Detail
+    const [isProductDetailOpen, setIsProductDetailOpen] = useState(false);
+    const openProductDetail = () => setIsProductDetailOpen(true);
+    const closeProductDetail = () => setIsProductDetailOpen(false);
+    const [productToShow, setProductToShow] = useState({});
 
-    // Get products by title
-    const [searchByTitle, setSearchByTitle] = useState(null)
+    // Checkout Side Menu
+    const [isCheckoutSideMenuOpen, setIsCheckoutSideMenuOpen] = useState(false);
+    const openCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(true);
+    const closeCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(false);
 
-    // Get products by category
-    const [searchByCategory, setSearchByCategory] = useState(null)
+    // Búsqueda
+    const [searchByTitle, setSearchByTitle] = useState(null);
+    const [searchByCategory, setSearchByCategory] = useState(null);
 
-    const filteredItemsByTitle = (libros, searchByTitle) => {
-        return libros?.filter(libro => libro.lbr_titulo.toLowerCase().includes(searchByTitle.toLowerCase()))
-    }
+    const filteredItemsByTitle = (items, searchByTitle) => {
+        return items?.filter(serv =>
+            serv?.srv_nombre?.toLowerCase().includes(searchByTitle.toLowerCase())
+        );
+    };
 
-    const filteredItemsByCategory = (libros, searchByCategory) => {
-        return libros?.filter(libro => libro.lbr_genero.toLowerCase().includes(searchByCategory.toLowerCase()))
-    }
+    const filteredItemsByCategory = (items, searchByCategory) => {
+        return items?.filter(serv =>
+            serv?.srv_categoria?.toLowerCase().includes(searchByCategory.toLowerCase())
+        );
+    };
 
-    const filterBy = (searchType, libros, searchByTitle, searchByCategory) => {
+
+    const filterBy = (searchType, items, title, category) => {
         if (searchType === 'BY_TITLE') {
-            return filteredItemsByTitle(libros, searchByTitle)
+            return filteredItemsByTitle(items, title);
         }
 
         if (searchType === 'BY_CATEGORY') {
-            return filteredItemsByCategory(libros, searchByCategory)
+            return filteredItemsByCategory(items, category);
         }
 
         if (searchType === 'BY_TITLE_AND_CATEGORY') {
-            return filteredItemsByCategory(libros, searchByCategory).filter(libro => libro.lbr_titulo.toLowerCase().includes(searchByTitle.toLowerCase()))
+            return filteredItemsByCategory(items, category).filter(serv =>
+                serv.srv_nombre.toLowerCase().includes(title.toLowerCase())
+            );
         }
 
-        if (!searchType) {
-            return libros
-        }
-    }
+        return items;
+    };
 
     useEffect(() => {
-        if (searchByTitle && searchByCategory) setFilteredItems(filterBy('BY_TITLE_AND_CATEGORY', libros, searchByTitle, searchByCategory))
-        if (searchByTitle && !searchByCategory) setFilteredItems(filterBy('BY_TITLE', libros, searchByTitle, searchByCategory))
-        if (!searchByTitle && searchByCategory) setFilteredItems(filterBy('BY_CATEGORY', libros, searchByTitle, searchByCategory))
-        if (!searchByTitle && !searchByCategory) setFilteredItems(filterBy(null, libros, searchByTitle, searchByCategory))
-    }, [libros, searchByTitle, searchByCategory])
-    
+        if (searchByTitle && searchByCategory) {
+            setFilteredItems(filterBy('BY_TITLE_AND_CATEGORY', servicios, searchByTitle, searchByCategory));
+        } else if (searchByTitle) {
+            setFilteredItems(filterBy('BY_TITLE', servicios, searchByTitle, searchByCategory));
+        } else if (searchByCategory) {
+            setFilteredItems(filterBy('BY_CATEGORY', servicios, searchByTitle, searchByCategory));
+        } else {
+            setFilteredItems(filterBy(null, servicios, searchByTitle, searchByCategory));
+        }
+    }, [servicios, searchByTitle, searchByCategory]);
+
     return (
         <ShoppingCartContext.Provider value={{
             count,
@@ -121,13 +106,13 @@ export function ShoppingCartProvider({ children }) {
             closeCheckoutSideMenu,
             order,
             setOrder,
-            libros,
-            setLibros,
+            servicios,
+            setServicios,
             searchByTitle,
             setSearchByTitle,
-            filteredItems,
             searchByCategory,
             setSearchByCategory,
+            filteredItems,
             account,
             setAccount,
             signOut,
@@ -135,5 +120,5 @@ export function ShoppingCartProvider({ children }) {
         }}>
             {children}
         </ShoppingCartContext.Provider>
-    )
+    );
 }

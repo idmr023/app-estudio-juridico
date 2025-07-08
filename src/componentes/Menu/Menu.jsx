@@ -1,136 +1,104 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { ShoppingCartContext } from '../../contexts/CarritoContext';
-import { NavDropdown } from 'react-bootstrap';
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
 
 export function Menu() {
-    const context = useContext(ShoppingCartContext)
-    const activeStyle = 'underline underline-offset-4'
+  const context = useContext(ShoppingCartContext);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const activeStyle = 'text-blue-800 underline underline-offset-4';
 
-    // Account
-    const account = localStorage.getItem('account')
-    const parsedAccount = JSON.parse(account)
-    // Sign Out
-    const signOut = localStorage.getItem('sign-out')
-    const parsedSignOut = JSON.parse(signOut)
-    // Has an account
-    const noAccountInLocalStorage = parsedAccount ? Object.keys(parsedAccount).length === 0 : true
-    const noAccountInLocalState = Object.keys(context.account).length === 0
-    const hasUserAnAccount = !noAccountInLocalStorage || !noAccountInLocalState
-    const isUserSignOut = context.signOut || parsedSignOut
+  const account = JSON.parse(localStorage.getItem('account'));
+  const signOut = JSON.parse(localStorage.getItem('sign-out'));
+  const hasUserAnAccount = account && Object.keys(account).length > 0;
+  const isUserSignOut = context.signOut || signOut;
 
-    const handleSignOut = () => {
-        const stringifiedSignOut = JSON.stringify(true)
-        localStorage.setItem('sign-out', stringifiedSignOut)
-        context.setSignOut(true)
-        localStorage.removeItem('account');
+  const handleSignOut = () => {
+    localStorage.setItem('sign-out', JSON.stringify(true));
+    localStorage.removeItem('account');
+    context.setSignOut(true);
+  };
+
+  const renderView = () => {
+    if (hasUserAnAccount && !isUserSignOut) {
+      return (
+        <>
+          <NavLink className={({ isActive }) => isActive ? activeStyle : 'text-gray-600 hover:text-blue-700'} to="/cuenta">
+            Cuenta
+          </NavLink>
+          <NavLink className={({ isActive }) => isActive ? activeStyle : 'text-gray-600 hover:text-blue-700'} to="/" onClick={handleSignOut}>
+            Cerrar sesión
+          </NavLink>
+        </>
+      );
+    } else {
+      return (
+        <NavLink className={({ isActive }) => isActive ? activeStyle : 'text-gray-600 hover:text-blue-700'} to="/login">
+          Login
+        </NavLink>
+      );
     }
+  };
 
-    const renderView = () => {
-        if (hasUserAnAccount && !isUserSignOut) {
-            return (
-                <>
-                    <NavLink
-                        className={({ isActive }) => isActive ? activeStyle : undefined}
-                        key={3}
-                        to="/cuenta"
-                    >
-                        Cuenta
-                    </NavLink>
-                    
-                    <NavLink
-                        className={({ isActive }) => isActive ? activeStyle : undefined}
-                        key={4}
-                        onClick = {() => handleSignOut()}
-                        to="/"
-                    >
-                        Cerrar sesión
-                    </NavLink>
-                </>
+  return (
+    <header className="bg-white shadow-md sticky top-0 z-50">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-6">
+        <div className="flex justify-between items-center py-3">
+          <Link to="/" className="text-xl font-semibold text-blue-900">Inicio</Link>
 
-            )
-        } else {
-            return (
-                <NavLink
-                    className={({ isActive }) => isActive ? activeStyle : undefined}
-                    key={4}
-                    to="/login"
-                >
-                    Login
-                </NavLink>)
-        }
-    };
+          <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
 
-    return (
-        <Navbar expand="lg" className="bg-body-tertiary">
-            <Container>
-                <Link className="navbar-brand" to="/">Inicio</Link>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
-                    <NavDropdown className='ml-32' title="Productos" id="navbarScrollingDropdown">
-                        <NavDropdown.Item href={`#action1`} key={9}>
-                            <NavLink
-                                to="/carrito"
-                                onClick={() => context.setSearchByCategory("all")}
-                            >
-                                <p>Todos los productos</p>
-                            </NavLink>
-                        </NavDropdown.Item>
+          <nav className={`md:flex md:items-center md:gap-6 ${menuOpen ? 'block' : 'hidden'} md:block mt-4 md:mt-0`}>
+            <div
+              className="relative"
+              onMouseEnter={() => setDropdownOpen(true)}
+              onMouseLeave={() => setDropdownOpen(false)}
+            >
+              <button
+                className="text-gray-700 hover:text-blue-700 focus:outline-none transition text-sm"
+                aria-haspopup="true"
+                aria-expanded={dropdownOpen}
+              >
+                Servicios
+              </button>
+              <div
+                className={`absolute bg-white shadow-lg mt-2 py-1 rounded-md w-44 z-20 transition-all duration-200 ease-in-out ${
+                  dropdownOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+                }`}
+              >
+                {['all', 'fantasía', 'aventuras', 'others'].map((cat, i) => (
+                  <NavLink
+                    key={i}
+                    to={`/carrito${cat !== 'all' ? `/${cat}` : ''}`}
+                    className="block px-4 py-1.5 text-sm text-gray-700 hover:bg-gray-100 hover:text-blue-700"
+                    onClick={() => {
+                      context.setSearchByCategory(cat);
+                      setDropdownOpen(false);
+                      setMenuOpen(false);
+                    }}
+                  >
+                    {cat === 'all' ? 'Todos los servicios' : cat.charAt(0).toUpperCase() + cat.slice(1)}
+                  </NavLink>
+                ))}
+              </div>
+            </div>
 
-                        <NavDropdown.Item href={`#action1`} key={10}>
-                            <NavLink
-                                to="/carrito/fantasía"
-                                onClick={() => context.setSearchByCategory("fantasía")}
-                            >
-                                <p>Fantasía</p>
-                            </NavLink>
-                        </NavDropdown.Item>
+            <NavLink className={({ isActive }) => isActive ? activeStyle : 'text-gray-600 hover:text-blue-700'} to="/contacto">
+              Contacto
+            </NavLink>
 
-                        <NavDropdown.Item href={`#action1`} key={11}>
-                            <NavLink
-                                to="/carrito/aventuras"
-                                onClick={() => context.setSearchByCategory("aventuras")}
-                            >
-                                <p>Aventuras</p>
-                            </NavLink>
-                        </NavDropdown.Item>
+            <NavLink className={({ isActive }) => isActive ? activeStyle : 'text-gray-600 hover:text-blue-700'} to="/ayuda">
+              Ayuda
+            </NavLink>
 
-                        <NavDropdown.Item href={`#action1`} key={12}>
-                            <NavLink
-                                to="/carrito/others"
-                                onClick={() => context.setSearchByCategory("others")}
-                            >
-                                <p>Otros</p>
-                            </NavLink>
-                        </NavDropdown.Item>
-
-                    </NavDropdown>
-
-                    <Nav className="me-auto flex flex-grow justify-between ">
-                        <NavLink
-                            className={({ isActive }) => isActive ? activeStyle : undefined}
-                            key={1}
-                            to="/contacto"
-                        >
-                            Contacto
-                        </NavLink>
-
-                        <NavLink
-                            className={({ isActive }) => isActive ? activeStyle : undefined}
-                            key={2}
-                            to="/ayuda"
-                        >
-                            Ayuda
-                        </NavLink>
-
-                        {renderView()}
-
-                    </Nav>
-                </Navbar.Collapse>
-            </Container>
-        </Navbar>
-    );
+            {renderView()}
+          </nav>
+        </div>
+      </div>
+    </header>
+  );
 }

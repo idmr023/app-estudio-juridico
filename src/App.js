@@ -5,7 +5,6 @@ import { BrowserRouter, useRoutes } from 'react-router-dom';
 import { GoUpProvider } from './contexts/GoUp/GoUpContext';
 import { ShoppingCartProvider } from './contexts/CarritoContext';
 import { TodoProvider } from './contexts/TodoContext';
-import { initializeLocalStorage } from './contexts/CarritoContext';
 
 import { ProtectedRoute } from './componentes/Menu/ProtectedRoute';
 import { Menu } from './componentes/Menu/Menu';
@@ -44,7 +43,6 @@ const AppRoutes = () =>{
 }
 
 const App = () => {
-  initializeLocalStorage()
 
   return (
     <>

@@ -1,15 +1,15 @@
-export const BotonSbt = ({children}) => {
+export const BotonSbt = ({ children }) => {
     return (
-        <button className="bg-black disabled:bg-black/40 text-white w-full rounded-lg py-3 mt-4 mb-2">
+        <button className="bg-blue-700 hover:bg-blue-800 text-white w-full rounded-lg py-3 mt-6 mb-4 px-4 transition">
             {children}
         </button>
-    )
-}
-    
-export const BotonSbt2 = ({children}) => {
+    );
+};
+
+export const BotonSbt2 = ({ children }) => {
     return (
-        <button className='border border-black disabled:text-black/40  w-full disabled:border-black/40 rounded-lg mt-6 py-3'>
+        <button className="border border-gray-600 text-gray-700 hover:bg-gray-100 disabled:text-gray-400 disabled:border-gray-400 w-full rounded-lg py-3 mt-6 mb-4 px-4 transition">
             {children}
         </button>
-    )
-}
+    );
+};

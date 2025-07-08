@@ -1,187 +1,243 @@
-import axios from 'axios'
-import { useContext, useState, useRef, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { ShoppingCartContext } from '../../contexts/CarritoContext'
-import { FormContainer } from 'componentes/UI/Form'
-import Contenido from './components/genera_contras'
+import axios from 'axios';
+import { useContext, useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ShoppingCartContext } from '../../contexts/CarritoContext';
 
 export function SignIn() {
-  const [view, setView] = useState('user-info')
-  const form = useRef(null)
-  const context = useContext(ShoppingCartContext)
-  const navigate = useNavigate()
-  const [mostrarHijo, setMostrarHijo] = useState(false)
-
-  // Account
-  const account = localStorage.getItem('account')
-  const parsedAccount = JSON.parse(account)
-  // Has an account
-  const noAccountInLocalStorage = parsedAccount ? Object.keys(parsedAccount).length === 0 : true
-  const noAccountInLocalState = context.account ? Object.keys(context.account).length === 0 : true
-  const hasUserAnAccount = !noAccountInLocalStorage || !noAccountInLocalState
+  const [view, setView] = useState('user-info');
+  const form = useRef(null);
+  const context = useContext(ShoppingCartContext);
+  const navigate = useNavigate();
+  const [mostrarHijo, setMostrarHijo] = useState(false);
+  const [dniLogin, setDniLogin] = useState('');
+  const [passwordLogin, setPasswordLogin] = useState('');
 
   useEffect(() => {
-    const storedSignOut = localStorage.getItem('sign-out')
-
     try {
-      if (storedSignOut) {
-        const parsedSignOut = JSON.parse(storedSignOut)
-        context.setSignOut(false)
-      }
+      const storedSignOut = localStorage.getItem('sign-out');
+      if (storedSignOut) context.setSignOut(false);
     } catch (error) {
-      console.error('Error parsing stored data:', error)
+      console.error('Error parsing stored data:', error);
     }
-  }, [context.setSignOut])
+  }, [context]);
 
   const handleLogin = () => {
-    context.setSignOut(false);
-    navigate('/cuenta')
-  };
-
-
-  const createAnAccount = () => {
-    const formData = new FormData(form.current)
-    const data = {
-      name: formData.get('name'),
-      dni: formData.get('dni'),
-      email: formData.get('email'),
-      password: formData.get('password')
+    if (!dniLogin || !passwordLogin) {
+      alert("Faltan datos para iniciar sesión.");
+      return;
     }
-    console.log("context.hasUserAnAccount:", context.hasUserAnAccount);
 
-    console.log(data);
-
-    axios.post('http://localhost:3001/api/signup', data)
+    axios.post('http://localhost:3001/api/login', {
+      dni: dniLogin,
+      password: passwordLogin
+    })
       .then(res => {
-        navigate("/login")
+        if (res.data === 'Exito') {
+          axios.get(`http://localhost:3001/api/list_usr/${dniLogin}`)
+            .then(userRes => {
+              const userData = {
+                name: userRes.data[0].usr_nom,
+                dni: userRes.data[0].usr_dni,
+                email: userRes.data[0].usr_email
+              };
+
+              if (!userData) {
+                alert('No se encontraron datos del usuario.');
+                return;
+              }
+
+              context.setAccount(userData);
+              context.setSignOut(false);
+              localStorage.setItem('account', JSON.stringify(userData));
+              localStorage.setItem('sign-out', JSON.stringify(false));
+              navigate('/cuenta');
+            })
+            .catch(err => {
+              console.error('Error al obtener datos del usuario:', err);
+              alert('Error al obtener los datos del usuario');
+            });
+        } else {
+          alert('DNI o contraseña incorrectos');
+        }
       })
       .catch(err => {
-        console.log(err.response.data)
+        console.error('Error al iniciar sesión:', err);
+      });
+  };
+
+  const createAnAccount = () => {
+    const formData = {
+      name: form.current.name.value,
+      dni: form.current.dni.value,
+      email: form.current.email.value,
+      password: form.current.password.value
+    };
+
+    axios.post('http://localhost:3001/api/signup', formData)
+      .then(() => {
+        alert('Cuenta creada con éxito. Ahora puedes iniciar sesión.');
+        setView('user-info');
+        setDniLogin(formData.dni);
+        setPasswordLogin(formData.password);
       })
+      .catch(err => {
+        console.error('Error al registrarse:', err);
+        alert('Error al registrarse. Revisa los datos.');
+      });
+  };
 
-    const stringifiedAccount = JSON.stringify(data)
-      localStorage.setItem('account', stringifiedAccount)
-      context.setAccount(data)
-      handleLogin()
-  }
+  const toggleHijo = () => setMostrarHijo(!mostrarHijo);
 
-  const toggleHijo = () => {
-    setMostrarHijo(!mostrarHijo);
-  }
-
-  const renderLogIn = () => {
-    return (
-      <FormContainer>
-        <div className='flex flex-col w-80'>
-          <p>
-            <span>{context.account?.email}</span>
-          </p>
-
-          <p>
-            <span>{context.account?.password}</span>
-          </p>
-
-          <button
-            onClick={() => handleLogin()}
-            className='bg-black disabled:bg-black/40 text-white w-full rounded-lg py-3 mt-4 mb-2'
-            disabled={!hasUserAnAccount}>
-            Log in
-          </button>
-
-          <div className='text-center'>
-            <a className='font-light text-xs underline underline-offset-4' href='/'>Forgot my password</a>
-          </div>
-
-          <button
-            className='border border-black disabled:text-black/40  w-full disabled:border-black/40 rounded-lg mt-6 py-3'
-            onClick={() => setView('create-user-info')}
-            disabled={hasUserAnAccount}>
-            Sign up
-          </button>
+  const renderLogIn = () => (
+    <div className="max-w-sm w-full mt-20 mx-auto">
+      <div className='bg-white p-8 rounded-xl shadow-md flex flex-col gap-4'>
+        <div className='flex flex-col gap-2'>
+          <label htmlFor="dni">DNI</label>
+          <input
+            name="dni"
+            type="number"
+            required
+            placeholder="76467750"
+            value={dniLogin}
+            onChange={(e) => setDniLogin(e.target.value)}
+          />
         </div>
-      </FormContainer>
-    )
-  }
 
-  const renderCreateUserInfo = () => {
-    return (
-      <div>
-        <form ref={form} className='flex flex-col gap-4 w-80'>
+        <div className='flex flex-col gap-2'>
+          <label htmlFor="password">Contraseña</label>
+          <input
+            name="password"
+            type="password"
+            required
+            placeholder="********"
+            value={passwordLogin}
+            onChange={(e) => setPasswordLogin(e.target.value)}
+          />
+        </div>
 
-          <div className='flex flex-col gap-1'>
-            <label htmlFor="name" className='font-light text-sm'>Tú correo:  </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="correo@ejemplo.com"
-              className='rounded-lg border border-black
-              placeholder:font-light placeholder:text-sm placeholder:text-black/60 focus:outline-none py-2 px-4'
-            />
-          </div>
+        <BotonSbt onClick={handleLogin}>Iniciar sesión</BotonSbt>
 
-          <div className='flex flex-col gap-1'>
-            <label htmlFor="name" className='font-light text-sm'>Tú nombre:  </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              placeholder="Pedro Ruíz"
-              className='rounded-lg border border-black
-              placeholder:font-light placeholder:text-sm placeholder:text-black/60 focus:outline-none py-2 px-4'
-            />
-          </div>
+        <div className='text-center'>
+          <a href='/' className='text-sm text-blue-600 underline'>¿Olvidaste tu contraseña?</a>
+        </div>
 
-          <div className='flex flex-col gap-1'>
-            <label htmlFor="dni" className='font-light text-sm'>Tú dni:</label>
-            <input
-              type="number"
-              id="dni"
-              name="dni"
-              placeholder="76467750"
-              className='rounded-lg border border-black
-              placeholder:font-light placeholder:text-sm placeholder:text-black/60 focus:outline-none py-2 px-4'
-            />
-          </div>
+        <BotonSbt2 onClick={() => setView('create-user-info')}>Registrarse</BotonSbt2>
+      </div>
+    </div>
+  );
 
-          <div className='flex flex-col gap-1'>
-            <label htmlFor="password" className='font-light text-sm'>Tú contraseña:  </label>
-            <input
-              type="text"
-              id="password"
-              name="password"
-              defaultValue={context.account?.password}
-              placeholder="******"
-              className='rounded-lg border border-black
-              placeholder:font-light placeholder:text-sm placeholder:text-black/60 focus:outline-none py-2 px-4'
-            />
-          </div>
+  const renderCreateUserInfo = () => (
+    <div className="max-w-sm w-full mt-20 mx-auto">
+      <form ref={form} className='bg-white p-8 rounded-xl shadow-md flex flex-col gap-4'>
+        <div className='flex flex-col gap-2'>
+          <label htmlFor="email">Correo electrónico</label>
+          <input name="email" type="email" required placeholder="correo@ejemplo.com" />
+        </div>
 
-          <Link to="/">
-            <button
-              className='bg-black disabled:bg-black/40 text-white w-full rounded-lg py-3 mt-4 mb-2'
-              onClick={() => createAnAccount()}>
-              Create
-            </button>
-          </Link>
+        <div className='flex flex-col gap-2'>
+          <label htmlFor="name">Nombre completo</label>
+          <input name="name" type="text" required placeholder="Pedro Ruiz" />
+        </div>
 
-        </form>
-        <button
-          className='bg-black disabled:bg-black/40 text-white w-full rounded-lg py-3 mt-4 mb-2'
-          onClick={() => toggleHijo()}>
+        <div className='flex flex-col gap-2'>
+          <label htmlFor="dni">DNI</label>
+          <input name="dni" type="number" required placeholder="76467750" />
+        </div>
+
+        <div className='flex flex-col gap-2'>
+          <label htmlFor="password">Contraseña</label>
+          <input name="password" type="text" required placeholder="********" />
+        </div>
+
+        <BotonSbt type='button' onClick={createAnAccount}>Crear cuenta</BotonSbt>
+
+        <button type='button' onClick={toggleHijo} className='text-sm text-blue-700 underline'>
           Generar contraseña segura
         </button>
-        {mostrarHijo && <Contenido />}
-      </div>
-    )
-  }
 
-  const renderView = () => view === 'create-user-info' ? renderCreateUserInfo() : renderLogIn()
+        {mostrarHijo && <PasswordGenerator />}
+      </form>
+    </div>
+  );
 
   return (
-    <div className='relative flex flex-col items-center mt-20'>
-      <h1 className="font-medium text-xl text-center mb-6 w-80">Welcome</h1>
-      {renderView()}
+    <div className='flex flex-col items-center'>
+      <h1 className='text-2xl font-semibold text-blue-900 mt-10'>Bienvenido</h1>
+      {view === 'create-user-info' ? renderCreateUserInfo() : renderLogIn()}
     </div>
-  )
+  );
 }
+
+// COMPONENTE DE GENERADOR DE CONTRASEÑAS
+function PasswordGenerator() {
+  const encriptar = () => {
+    const input = document.getElementById('input__msj');
+    const texto = input.value
+      .replace(/e/g, 'enter')
+      .replace(/i/g, 'imes')
+      .replace(/a/g, 'ai')
+      .replace(/o/g, 'ober')
+      .replace(/u/g, 'ufat');
+    document.getElementById('mostrar_texto').value = texto;
+    input.value = '';
+  };
+
+  const desencriptar = (texto) =>
+    texto.replace(/enter/g, 'e')
+      .replace(/imes/g, 'i')
+      .replace(/ai/g, 'a')
+      .replace(/ober/g, 'o')
+      .replace(/ufat/g, 'u');
+
+  const procesarDesenscriptar = () => {
+    const texto = document.getElementById('mostrar_texto').value;
+    document.getElementById('input__msj').value = desencriptar(texto);
+    document.getElementById('mostrar_texto').value = '';
+  };
+
+  const copiarAlPortapapeles = () => {
+    const value = document.getElementById('mostrar_texto').value;
+    navigator.clipboard.writeText(value);
+  };
+
+  return (
+    <div className='bg-white border p-6 mt-6 rounded-xl shadow-md flex flex-col gap-3'>
+      <div className='flex flex-col gap-2'>
+        <label htmlFor='input__msj'>Texto a encriptar</label>
+        <input id='input__msj' placeholder='Texto a encriptar' />
+      </div>
+
+      <button onClick={encriptar}>Encriptar</button>
+
+      <div className='flex flex-col gap-2'>
+        <label htmlFor='mostrar_texto'>Texto encriptado</label>
+        <input id='mostrar_texto' placeholder='Texto encriptado' />
+      </div>
+
+      <button onClick={copiarAlPortapapeles}>Copiar</button>
+      <button onClick={procesarDesenscriptar}>Desencriptar</button>
+    </div>
+  );
+}
+
+// BOTONES
+export const BotonSbt = ({ children, onClick, disabled, type }) => (
+  <button
+    onClick={onClick}
+    disabled={disabled}
+    type={type}
+    className="bg-blue-700 hover:bg-blue-800 text-white w-full rounded-lg py-3 px-4 mt-6 transition"
+  >
+    {children}
+  </button>
+);
+
+export const BotonSbt2 = ({ children, onClick, disabled }) => (
+  <button
+    onClick={onClick}
+    disabled={disabled}
+    className="border border-blue-700 text-blue-700 hover:bg-blue-100 disabled:text-blue-300 disabled:border-blue-300 w-full rounded-lg py-3 px-4 mt-6 transition"
+  >
+    {children}
+  </button>
+);

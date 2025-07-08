@@ -1,72 +1,107 @@
-import Accordion from 'react-bootstrap/Accordion';
+import { useState } from "react";
+
 export function PagAyuda() {
-  
   const qyaData = [
     {
       key: 0,
-      pregunta: "¿Cuál es la ubicación de la librería?",
-      respuesta: "Nuestra librería se encuentra en el centro de la ciudad, en la calle principal, cerca de la plaza central.",
+      pregunta: "¿En qué áreas del derecho brinda servicios?",
+      respuesta: "Brindo asesoría y representación en derecho civil, penal, laboral, familiar, y comercial.",
+      etiqueta: "Servicios"
     },
     {
       key: 1,
-      pregunta: "¿Cuáles son los horarios de atención?",
-      respuesta: "Abrimos de lunes a viernes de 9:00 AM a 7:00 PM y los sábados de 10:00 AM a 4:00 PM. Cerramos los domingos.",
+      pregunta: "¿Dónde se encuentra ubicado el despacho?",
+      respuesta: "El despacho se ubica en Av. Arequipa 234, Cercado de Lima, Lima.",
+      etiqueta: "Ubicación"
     },
     {
       key: 2,
-      pregunta: "¿Qué tipos de libros ofrecen?",
-      respuesta: "Ofrecemos una amplia variedad de libros, incluyendo novelas, libros de no ficción, poesía, libros infantiles, libros de referencia y mucho más.",
+      pregunta: "¿Cuáles son los horarios de atención?",
+      respuesta: "De lunes a viernes de 9:00 AM a 6:00 PM. Se requiere cita previa.",
+      etiqueta: "Horarios"
     },
     {
       key: 3,
-      pregunta: "¿Ofrecen servicios de alquiler de libros?",
-      respuesta: "Sí, contamos con un servicio de alquiler de libros. Los clientes pueden alquilar libros por un período determinado y luego devolverlos.",
+      pregunta: "¿Ofrecen consultas virtuales?",
+      respuesta: "Sí, se pueden agendar consultas vía videollamada o teléfono.",
+      etiqueta: "Modalidad"
     },
     {
       key: 4,
-      pregunta: "¿Venden libros usados?",
-      respuesta: "Sí, también vendemos libros usados a precios asequibles. Es una excelente opción para aquellos que buscan gangas literarias.",
+      pregunta: "¿Cuál es el costo de una consulta?",
+      respuesta: "El costo varía según el tipo de caso, pero se ofrece una primera orientación gratuita.",
+      etiqueta: "Precio"
     },
     {
       key: 5,
-      pregunta: "¿Tienen libros para niños?",
-      respuesta: "Sí, tenemos una sección especial dedicada a libros para niños de todas las edades. Desde cuentos ilustrados hasta libros educativos.",
+      pregunta: "¿Qué documentos necesito para una consulta legal?",
+      respuesta: "Depende del caso, pero generalmente se solicita una identificación y documentos relacionados con el conflicto legal.",
+      etiqueta: "Documentos"
     },
     {
       key: 6,
-      pregunta: "¿Puedo hacer pedidos especiales?",
-      respuesta: "Por supuesto, aceptamos pedidos especiales. Si estás buscando un libro en particular que no tenemos en stock, haremos nuestro mejor esfuerzo para conseguirlo para ti.",
+      pregunta: "¿Cómo agendar una cita?",
+      respuesta: "Puedes llamarnos al 947 924 204 o escribirnos al correo contacto.abogado@gmail.com.",
+      etiqueta: "Citas"
     },
     {
       key: 7,
-      pregunta: "¿Ofrecen descuentos para estudiantes?",
-      respuesta: "Sí, ofrecemos descuentos especiales para estudiantes. Solo presenta tu identificación de estudiante al hacer una compra.",
+      pregunta: "¿Está colegiado o tiene especialización?",
+      respuesta: "Sí, estoy colegiado y cuento con especializaciones en derecho penal y derecho de familia.",
+      etiqueta: "Estudios"
     },
     {
       key: 8,
-      pregunta: "¿Organizan eventos literarios?",
-      respuesta: "Sí, organizamos eventos literarios como presentaciones de libros, charlas con autores y clubes de lectura. Mantente al tanto de nuestro calendario de eventos.",
+      pregunta: "¿Cuánto dura una consulta?",
+      respuesta: "Una consulta suele durar entre 30 y 60 minutos, dependiendo del caso.",
+      etiqueta: "Precio"
     },
     {
       key: 9,
-      pregunta: "¿Tienen una cafetería dentro de la librería?",
-      respuesta: "Sí, contamos con una acogedora cafetería donde puedes disfrutar de café, té y aperitivos mientras lees o estudias en nuestra librería."
-    },
+      pregunta: "¿Brinda asesoría a empresas?",
+      respuesta: "Sí, también ofrezco servicios legales para pequeñas y medianas empresas.",
+      etiqueta: "Servicios"
+    }
   ];
 
+  const [filtro, setFiltro] = useState('Todos');
+  const etiquetas = ['Todos', ...Array.from(new Set(qyaData.map(q => q.etiqueta)))];
+
+  const preguntasFiltradas = filtro === 'Todos' ? qyaData : qyaData.filter(q => q.etiqueta === filtro);
+
   return (
-    <>
-      <div className='mx-8 my-16 text-center'>
-        <h1>Preguntas frecuentes</h1>
-        <Accordion defaultActiveKey="0" flush>
-        {qyaData.map((dato) => (
-          <Accordion.Item eventKey={dato.key} key={dato.key}>
-            <Accordion.Header>{dato.pregunta}</Accordion.Header>
-            <Accordion.Body>{dato.respuesta}</Accordion.Body>
-          </Accordion.Item>
+    <section className="max-w-6xl mx-auto px-6 py-12">
+      <h1 className="text-3xl sm:text-4xl font-semibold text-center mb-6 text-gray-800 tracking-wide">
+        Preguntas Frecuentes
+      </h1>
+
+      <div className="flex flex-wrap justify-center gap-3 mb-10">
+        {etiquetas.map((et, i) => (
+          <button
+            key={i}
+            onClick={() => setFiltro(et)}
+            className={`px-4 py-1 border rounded-full text-sm transition ${filtro === et ? 'bg-gray-800 text-white' : 'border-gray-400 text-gray-700 hover:bg-gray-100'}`}
+          >
+            {et}
+          </button>
         ))}
-      </Accordion>
-    </div>
-    </>
+      </div>
+
+      <div className="space-y-0 border-t border-gray-300 divide-y divide-gray-300">
+        {preguntasFiltradas.map((dato) => (
+          <details
+            key={dato.key}
+            className="group open:shadow-sm transition-all px-6 py-5"
+          >
+            <summary className="cursor-pointer select-none text-base sm:text-lg text-gray-800 font-medium">
+              {dato.pregunta}
+            </summary>
+            <div className="mt-2 text-gray-700 text-sm">
+              {dato.respuesta}
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
   );
 }
