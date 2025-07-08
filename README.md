@@ -30,8 +30,19 @@
 
 ![project-screenshot]
 
-En este pryecto he querido combinar todas las tecnlogías que conozco hasta el momento. La página trata acerca de una biblioteca, esta tiene un catálogo de libros para prestar, así mismo esta biblioteca vende los libros.
+Proyecto Librería es una aplicación web moderna orientada a la venta y gestión de servicios relacionados con asesoría legal y empresarial, presentada bajo una interfaz limpia, accesible y responsiva.
 
+La página busca ofrecer una experiencia intuitiva y rápida al usuario, integrando funcionalidades como:
+- Catálogo de servicios legales con visualización detallada.
+- Carrito de compras interactivo con suma automática del precio total.
+- Sistema de órdenes con historial y vista por fecha.
+- Integración de iconografía mediante Font Awesome.
+- Diseño optimizado con TailwindCSS para una presentación moderna y responsive.
+- Conexión con backend vía API para obtener servicios de forma dinámica.
+
+La idea del proyecto es representar una librería o catálogo digital de servicios profesionales, accesible y clara para los usuarios. Además, se ha prestado especial atención a la experiencia de usuario (UX), incorporando detalles como botones flotantes para volver arriba, filtros por búsqueda de texto y visualización elegante de pedidos realizados.
+
+Este proyecto combina conocimientos en React, gestión de estado con Context API, peticiones HTTP con Axios, y una estructura bien organizada en componentes.
 
 ### Tecnologías usadas
 
