@@ -13,7 +13,7 @@ export function Footer() {
 
                 <div>
                     <h4 className="text-lg font-semibold mb-4">Correo</h4>
-                    <p>bancoutp@utp.edu.pe</p>
+                    <p>abodaniel@yahoo.com</p>
                 </div>
 
                 <div>
