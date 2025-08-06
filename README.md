@@ -5,7 +5,6 @@
   <p align="center">
     <a href="https://libreria-two.vercel.app">Vea una demostración</a>
     <br/>
-    <a href="https://github.com/idmr023/Libreria/issues">Reportar bugs</a>
   </p>
 </div>
 
@@ -65,8 +64,6 @@ Este proyecto combina conocimientos en React, gestión de estado con Context API
 - Se limpió el código y se eliminaron referencias a libros (`lbr_*`)
 - Se ajustaron las rutas y componentes (`MyOrder`, `OrderCard`, `OrdersCard`, etc.) para trabajar solo con `servicios`
 
-Click en [open issues](https://github.com/idmr023/Libreria/issues) para una lista de todas las funcionalidades propuestas.
-
 <!-- LICENSE -->
 ## Licencia
 
@@ -77,7 +74,7 @@ Distribuido bajo una licencia MIT. Vea `LICENSE.txt` para mayor información.
 
 Ivan Manrique - [![linkedin][linkedin-shield]][linkedin-url] - idmr_02@outlook.com
 
-Link del proyecto: [https://github.com/idmr023/Libreria](https://github.com/idmr023/Libreria)
+Link del proyecto: [https://github.com/idmr023/ProyectoAbogado](https://github.com/idmr023/ProyectoAbogado)
 
 <p align="right">(<a href="#readme-top">Volver a arriba</a>)</p>
 
