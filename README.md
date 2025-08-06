@@ -30,7 +30,7 @@
 
 ![project-screenshot]
 
-Proyecto Librería es una aplicación web moderna orientada a la venta y gestión de servicios relacionados con asesoría legal y empresarial, presentada bajo una interfaz limpia, accesible y responsiva.
+Este proyecto es una aplicación web moderna orientada a la venta y gestión de servicios relacionados con asesoría legal y empresarial, presentada bajo una interfaz limpia, accesible y responsiva.
 
 La página busca ofrecer una experiencia intuitiva y rápida al usuario, integrando funcionalidades como:
 - Catálogo de servicios legales con visualización detallada.
