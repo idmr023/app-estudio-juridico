@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-/* App.css */
-
-/* 1. Definimos las variables de color para el tema claro (por defecto) */
 :root {
   --color-background: #FAFAFA;
   --color-text: #333333;
@@ -13,7 +9,6 @@
   --color-button-bg: #D1D1D1;
 }
 
-/* 2. Redefinimos las mismas variables cuando el tema oscuro está activo */
 [data-theme='dark'] {
   --color-background: #282c34;
   --color-text: #FAFAFA;
@@ -21,7 +16,6 @@
   --color-button-bg: #444444;
 }
 
-/* 3. Estilos generales que usan las variables */
 body {
   background-color: var(--color-background);
   color: var(--color-text);
@@ -33,7 +27,6 @@ body {
   text-align: center;
 }s
 
-/* Estilos para los componentes */
 .header {
   background-color: var(--color-header-bg);
   padding: 20px;
@@ -45,7 +38,6 @@ body {
   padding: 20px;
 }
 
-/* Estilos para el botón de cambio de tema */
 .theme-switcher-btn {
   position: fixed;
   top: 20px;
