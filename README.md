@@ -34,34 +34,24 @@ Este proyecto es una aplicación web moderna orientada a la venta y gestión de 
 La página busca ofrecer una experiencia intuitiva y rápida al usuario, integrando funcionalidades como:
 - Catálogo de servicios legales con visualización detallada.
 - Carrito de compras interactivo con suma automática del precio total.
-- Sistema de órdenes con historial y vista por fecha.
-- Integración de iconografía mediante Font Awesome.
-- Diseño optimizado con TailwindCSS para una presentación moderna y responsive.
 - Conexión con backend vía API para obtener servicios de forma dinámica.
 
-La idea del proyecto es representar una librería o catálogo digital de servicios profesionales, accesible y clara para los usuarios. Además, se ha prestado especial atención a la experiencia de usuario (UX), incorporando detalles como botones flotantes para volver arriba, filtros por búsqueda de texto y visualización elegante de pedidos realizados.
-
-Este proyecto combina conocimientos en React, gestión de estado con Context API, peticiones HTTP con Axios, y una estructura bien organizada en componentes.
+La idea del proyecto es representar un catálogo digital de servicios profesionales, accesible y clara para los usuarios. Además, se ha prestado especial atención a la experiencia de usuario (UX), incorporando detalles como botones flotantes para volver arriba, filtros por búsqueda de texto y visualización elegante de pedidos realizados.
 
 ### Tecnologías usadas
 
 * [![Vite][Vite.js]][Vite-url]
 * [![React][React.js]][React-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![Tailwind][Tailwind.css]][Tailwind-url]
 * [![MYSQL][MYSQL.io]][MYSQL-url]
 
 <!-- ROADMAP -->
 ## Actualizaciones
 
-- Se adaptó todo el sistema de carrito para usar `servicios` en lugar de `libros`
-- Se actualizó la función `totalPrice()` para recorrer `servicios` usando `srv_precio`
 - Se mejoró la función `dateTime()` para retornar fecha local como `string`
 - Se corrigió bug en `OrdersCard` donde `dateTime()` se usaba como función, causando `TypeError`
 - Se rediseñó el botón `+` para añadir servicios y `✓` para eliminarlos del carrito
 - Se eliminó el comportamiento de mostrar detalles extra al quitar servicios; ahora solo se actualiza la lista
 - Se implementó `quantity` y `totalPrice` por cada servicio en el carrito
-- Se limpió el código y se eliminaron referencias a libros (`lbr_*`)
 - Se ajustaron las rutas y componentes (`MyOrder`, `OrderCard`, `OrdersCard`, etc.) para trabajar solo con `servicios`
 
 <!-- LICENSE -->
