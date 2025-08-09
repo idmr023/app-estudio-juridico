@@ -3,17 +3,27 @@
 @tailwind utilities;
 
 :root {
-  --color-background: #FAFAFA;
-  --color-text: #333333;
-  --color-header-bg: #EAEAEA;
-  --color-button-bg: #D1D1D1;
+  --color-background: #F3F4F6;  /* gray-100 */
+  --color-surface: #FFFFFF;       /* white */
+  --color-text-primary: #1F2937;  /* gray-800 */
+  --color-text-secondary: #374151;/* gray-700 */
+  --color-primary: #1E40AF;       /* blue-800 */
+  --color-primary-hover: #1E3A8A; /* blue-900 */
+  --color-border: #E5E7EB;       /* gray-200 */
+  --color-success: #16A34A;     /* green-600 */
+  --color-error: #DC2626;        /* red-600 */
 }
 
 [data-theme='dark'] {
-  --color-background: #282c34;
-  --color-text: #FAFAFA;
-  --color-header-bg: #20232a;
-  --color-button-bg: #444444;
+  --color-background: #111827;  /* gray-900 */
+  --color-surface: #1F2937;       /* gray-800 */
+  --color-text-primary: #F9FAFB;  /* gray-50 */
+  --color-text-secondary: #D1D5DB;/* gray-300 */
+  --color-primary: #3B82F6;       /* blue-500 */
+  --color-primary-hover: #2563EB; /* blue-600 */
+  --color-border: #4B5563;       /* gray-600 */
+  --color-success: #4ADE80;     /* green-400 */
+  --color-error: #F87171;        /* red-400 */
 }
 
 body {
@@ -25,7 +35,7 @@ body {
 
 .app-container {
   text-align: center;
-}s
+}
 
 .header {
   background-color: var(--color-header-bg);

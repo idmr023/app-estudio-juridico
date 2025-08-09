@@ -1,13 +1,11 @@
-
 import React from "react";
 
-import themeOn from "../../public/img/themeOn.png";
-import themeOff from "../../public/img/themeOff.png";
-
-// Recibe el estado del tema y la función para cambiarlo como props
 const SwitcherTema = ({ isDarkMode, toggleTheme }) => {
-  const iconoClaro = <img className="theme-icon" src={themeOn} alt="Tema claro" />;
-  const iconoOscuro = <img className="theme-icon" src={themeOff} alt="Tema oscuro" />;
+
+  // 2. Usa la ruta como un string directamente en el atributo src.
+  //    El slash "/" al principio apunta a la raíz de la carpeta public.
+  const iconoClaro = <img className="theme-icon" src={"/img/themeOn.png"} alt="Tema claro" />;
+  const iconoOscuro = <img className="theme-icon" src={"/img/themeOff.png"} alt="Tema oscuro" />;
 
   return (
     <button className="theme-switcher-btn" onClick={toggleTheme}>

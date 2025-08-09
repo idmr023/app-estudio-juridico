@@ -1,6 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { ShoppingCartContext } from '../../contexts/CarritoContext';
+import SwitcherTema from 'componentes/SwitcherTema';
+import { useTheme } from 'contexts/ThemeContext/ThemeContext';
 
 export function Menu() {
   const context = useContext(ShoppingCartContext);
@@ -18,6 +20,8 @@ export function Menu() {
     localStorage.removeItem('account');
     context.setSignOut(true);
   };
+
+  const {theme, toggleTheme} = useTheme();
 
   const renderView = () => {
     if (hasUserAnAccount && !isUserSignOut) {
@@ -96,6 +100,11 @@ export function Menu() {
             </NavLink>
 
             {renderView()}
+
+            <SwitcherTema
+                isDarkMode={theme == 'dark'}
+                toggleTheme={toggleTheme}
+            />
           </nav>
         </div>
       </div>
