@@ -2,13 +2,18 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFolderOpen, faHourglassHalf, faCheckCircle, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 function ListaDeCasos({ clienteDNI }) {
-    
-    // Estados para manejar los datos, la carga y los errores
     const [casos, setCasos] = useState([]);
     const [estaCargando, setEstaCargando] = useState(true);
     const [error, setError] = useState(null);
+
+    const navigate = useNavigate    ();
+
+    const handleRowClick = (caso_id) => {
+        navigate(`/cuenta/casos/${caso_id}`); 
+    };
 
     useEffect(() => {
         if (!clienteDNI) {
@@ -93,7 +98,10 @@ function ListaDeCasos({ clienteDNI }) {
                                     {casos.map((caso) => {
                                         const status = statusInfo[caso.caso_estado] || statusInfo['Cerrado'];
                                         return (
-                                            <tr key={caso.caso_id} className="hover:bg-gray-800/50 transition-colors duration-200">
+                                            <tr key={caso.caso_id} 
+                                                className="hover:bg-gray-800/50 transition-colors duration-200 cursor-pointer"
+                                                onClick={() => handleRowClick(caso.caso_id)} 
+                                            >
                                                 <td className="px-6 py-4 font-mono text-teal-400">{caso.caso_id}</td>
                                                 <td className="px-6 py-4 font-medium text-white">{caso.caso_titulo}</td>
                                                 <td className="px-6 py-4">{caso.nombre_abogado || 'Pendiente'}</td>

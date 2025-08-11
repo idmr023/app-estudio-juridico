@@ -19,8 +19,9 @@ import { SignIn } from 'pages/registrarse/SignIn';
 import { Account } from 'pages/cuenta/Account';
 
 import "./App.css"
-import ListaDeCasos from 'pages/cuenta/ListaDeCasos';
+import ListaDeCasos from 'pages/cuenta/ListaCasos/ListaDeCasos';
 import { ShoppingCartContext } from 'contexts/CarritoContext/index';
+import { CasoDetallePage } from 'pages/cuenta/ListaCasos/CasosDetalles';
 
 
 const AppRoutes = () =>{
@@ -42,7 +43,8 @@ const AppRoutes = () =>{
       { path: '/carrito/my-orders/:id', element: <MyOrder /> },
       { path: "/login", element: <SignIn />},
       { path: "/cuenta", element: <Account /> },
-      {path: "/cuenta/casos", element: listaDeCasosComponent},
+      { path: "/cuenta/casos", element: listaDeCasosComponent},
+      { path: "/cuenta/casos/:caso_id", element: <CasoDetallePage /> },
       { path: "*", element: <Page404 /> },
   ])
   

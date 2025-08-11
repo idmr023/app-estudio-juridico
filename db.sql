@@ -61,6 +61,74 @@ CREATE TABLE servicio (
     srv_modalidad VARCHAR(20)
 );
 
+-- --- TABLA PARA EL TIMELINE / HISTORIAL DE EVENTOS ---
+CREATE TABLE eventos_caso (
+    evento_id INT AUTO_INCREMENT PRIMARY KEY,
+    -- Clave foránea para vincular con el caso específico
+    caso_id VARCHAR(15) NOT NULL,
+    -- Descripción del hito (ej: "Estado actualizado a 'En revisión'")
+    evento_descripcion VARCHAR(255) NOT NULL,
+    -- Quién realizó la acción (útil para auditoría)
+    creado_por_dni INT,
+    -- Fecha en que ocurrió el evento
+    fecha_evento TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (caso_id) REFERENCES casos(caso_id) ON DELETE CASCADE,
+    FOREIGN KEY (creado_por_dni) REFERENCES usuario(usr_dni) ON DELETE SET NULL
+);
+
+INSERT INTO eventos_caso (caso_id, evento_descripcion, creado_por_dni, fecha_evento) VALUES
+('C20250001', 'Caso creado y asignado al abogado Roberto Perez.', 10102020, '2025-08-01 10:00:00'),
+('C20250001', 'Estado del caso actualizado a "En revisión".', 10102020, '2025-08-02 15:30:00'),
+('C20250001', 'Cliente ha subido un nuevo documento: "Copia_DNI_Carlos_Gomez.jpg".', 11223344, '2025-08-03 09:15:00'),
+('C20250001', 'Abogado ha subido un nuevo documento: "Convenio_Regulador_Borrador.pdf".', 10102020, '2025-08-04 11:00:00'),
+('C20250002', 'Caso creado. Pendiente de asignación de abogado.', 55667788, '2025-08-05 16:00:00'),
+('C20250003', 'Estado del caso actualizado a "Cerrado".', 30304040, '2025-07-20 18:00:00');
+
+-- --- TABLA PARA LOS DOCUMENTOS ---
+CREATE TABLE documentos_caso (
+    doc_id INT AUTO_INCREMENT PRIMARY KEY,
+    caso_id VARCHAR(15) NOT NULL,
+    -- El nombre original del archivo para mostrar al usuario
+    nombre_archivo VARCHAR(255) NOT NULL,
+    -- IMPORTANTE: Aquí se guarda la URL del archivo almacenado en un servicio como S3 o Cloudinary
+    url_almacenamiento TEXT NOT NULL,
+    -- El tipo de archivo (ej: 'application/pdf') para mostrar iconos
+    tipo_archivo VARCHAR(100),
+    -- Quién subió el documento
+    subido_por_dni INT,
+    fecha_subida TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (caso_id) REFERENCES casos(caso_id) ON DELETE CASCADE,
+    FOREIGN KEY (subido_por_dni) REFERENCES usuario(usr_dni) ON DELETE SET NULL
+);
+
+INSERT INTO documentos_caso (caso_id, nombre_archivo, url_almacenamiento, tipo_archivo, subido_por_dni) VALUES
+('C20250001', 'Convenio_Regulador_Borrador.pdf', 'https://example.com/storage/doc1.pdf', 'application/pdf', 10102020),
+('C20250001', 'Copia_DNI_Carlos_Gomez.jpg', 'https://example.com/storage/doc2.jpg', 'image/jpeg', 11223344),
+('C20250002', 'Escrituras_Propiedad_Lote_A.pdf', 'https://example.com/storage/doc3.pdf', 'application/pdf', 55667788),
+('C20250003', 'Comprobante_Pago_Final.pdf', 'https://example.com/storage/doc4.pdf', 'application/pdf', 99887766);
+
+-- --- TABLA PARA LA MENSAJERÍA ---
+CREATE TABLE mensajes_caso (
+    mensaje_id INT AUTO_INCREMENT PRIMARY KEY,
+    caso_id VARCHAR(15) NOT NULL,
+    -- Quién envió el mensaje
+    remitente_dni INT NOT NULL,
+    -- El contenido del mensaje
+    contenido_mensaje TEXT NOT NULL,
+    -- Fecha de envío
+    fecha_envio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    -- Para saber si el mensaje ha sido visto (0 = no leído, 1 = leído)
+    leido TINYINT(1) DEFAULT 0,
+    FOREIGN KEY (caso_id) REFERENCES casos(caso_id) ON DELETE CASCADE,
+    FOREIGN KEY (remitente_dni) REFERENCES usuario(usr_dni) ON DELETE CASCADE
+);
+
+INSERT INTO mensajes_caso (caso_id, remitente_dni, contenido_mensaje, fecha_envio) VALUES
+('C20250001', 11223344, 'Buenas tardes, abogado. He subido la copia de mi DNI. ¿Hay algún otro documento que necesite de mi parte por ahora?', '2025-08-03 09:16:00'),
+('C20250001', 10102020, 'Recibido, Carlos. Gracias. Por ahora es suficiente. Estoy terminando el borrador del convenio, se lo enviaré para su revisión a más tardar mañana.', '2025-08-03 11:30:00'),
+('C20250001', 11223344, 'Perfecto, quedo a la espera. Muchas gracias.', '2025-08-03 11:35:00'),
+('C20250003', 30304040, 'Luisa, le confirmo que el pago ha sido procesado y el caso se ha cerrado exitosamente. Saludos.', '2025-07-20 18:05:00');
+
 -- Tabla 'casos': Almacena los casos legales, vinculados a la tabla 'usuario'.
 CREATE TABLE casos (
     caso_id VARCHAR(15) PRIMARY KEY,

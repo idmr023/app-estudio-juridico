@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faLock, faPlus, faCheck, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useContext } from 'react';
 import { ShoppingCartContext } from '../../contexts/CarritoContext';
-import ListaDeCasos from './ListaDeCasos';
+import ListaDeCasos from './ListaCasos/ListaDeCasos';
 
 const Account = () => {
   const [mostrarDatos, setMostrarDatos] = useState(true);
