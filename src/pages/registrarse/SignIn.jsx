@@ -68,7 +68,7 @@ export function SignIn() {
   const createAnAccount = () => {
     const formData = {
       name: form.current.name.value,
-      dni: form.current.dni.value,
+      dni: parseInt(form.current.dni.value, 10),
       email: form.current.email.value,
       password: form.current.password.value
     };

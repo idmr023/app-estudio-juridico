@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { GlobalStyle } from './GlobalStyle';
 import { BrowserRouter, useRoutes } from 'react-router-dom';
@@ -7,7 +7,7 @@ import { ShoppingCartProvider } from './contexts/CarritoContext';
 import { TodoProvider } from './contexts/TodoContext';
 
 import { ProtectedRoute } from './componentes/Menu/ProtectedRoute';
-import { Menu } from './componentes/Menu/Menu';
+import { Menu, MenuPrincipal } from './componentes/Menu/MenuPrincipal';
 import { Footer } from './componentes/Footer';
 import { Contacto } from "./pages/contacto";
 import { PagAyuda } from "./pages/ayuda";
@@ -19,8 +19,14 @@ import { SignIn } from 'pages/registrarse/SignIn';
 import { Account } from 'pages/cuenta/Account';
 
 import "./App.css"
+import ListaDeCasos from 'pages/cuenta/ListaDeCasos';
+import { ShoppingCartContext } from 'contexts/CarritoContext/index';
+
 
 const AppRoutes = () =>{
+  const { account } = useContext(ShoppingCartContext);
+    const listaDeCasosComponent = account && account.dni && <ListaDeCasos clienteDNI={account.dni} />;
+
 
   let routes = useRoutes([
       { path: "/", element: <Home /> },
@@ -36,6 +42,7 @@ const AppRoutes = () =>{
       { path: '/carrito/my-orders/:id', element: <MyOrder /> },
       { path: "/login", element: <SignIn />},
       { path: "/cuenta", element: <Account /> },
+      {path: "/cuenta/casos", element: listaDeCasosComponent},
       { path: "*", element: <Page404 /> },
   ])
   
@@ -50,7 +57,7 @@ const App = () => {
       <ShoppingCartProvider>
       <BrowserRouter>
       <GoUpProvider>
-        <Menu />  
+        <MenuPrincipal />  
         <AppRoutes />
         <GlobalStyle /> 
         <Footer />

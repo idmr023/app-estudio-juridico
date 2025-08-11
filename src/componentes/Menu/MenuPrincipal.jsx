@@ -3,8 +3,11 @@ import { Link, NavLink } from 'react-router-dom';
 import { ShoppingCartContext } from '../../contexts/CarritoContext';
 import SwitcherTema from 'componentes/SwitcherTema';
 import { useTheme } from 'contexts/ThemeContext/ThemeContext';
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import { FontAwesomeIcon } from '../../../node_modules/@fortawesome/react-fontawesome/index';
+import { faCaretDown } from '../../../node_modules/@fortawesome/free-solid-svg-icons/index';
 
-export function Menu() {
+export function MenuPrincipal() {
   const context = useContext(ShoppingCartContext);
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -27,8 +30,61 @@ export function Menu() {
     if (hasUserAnAccount && !isUserSignOut) {
       return (
         <>
-          <NavLink className={({ isActive }) => isActive ? activeStyle : 'text-gray-600 hover:text-blue-700'} to="/cuenta">
-            Cuenta
+          <NavLink className={({ isActive }) => isActive ? activeStyle : 'text-gray-600 hover:text-blue-700'}>
+              <Menu as="div" className="relative inline-block">
+                <MenuButton className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 shadow-xs inset-ring-1 inset-ring-gray-300 hover:bg-gray-50">
+                  Cuenta
+                  <FontAwesomeIcon icon={faCaretDown}/>
+                </MenuButton>
+
+                <MenuItems
+                  transition
+                  className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg outline-1 outline-black/5 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+                >
+                  <div className="py-1">
+                    <NavLink to="/cuenta"> 
+                      <MenuItem>
+                        <a
+                          
+                          className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
+                        >
+                          Datos de la cuenta
+                        </a>
+                      </MenuItem>
+                    </NavLink>
+
+                    <NavLink to="/cuenta/casos">
+                      <MenuItem>
+                        <a
+                          href="#"
+                          className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
+                        >
+                          Estado de los casos
+                        </a>
+                      </MenuItem>
+                    </NavLink>
+                    <MenuItem>
+                      <a
+                        href="#"
+                        className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
+                      >
+                        License
+                      </a>
+                    </MenuItem>
+                    <form action="#" method="POST">
+                      <MenuItem>
+                        <button
+                          type="submit"
+                          className="block w-full px-4 py-2 text-left text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
+                        >
+                          Sign out
+                        </button>
+                      </MenuItem>
+                    </form>
+                  </div>
+                </MenuItems>
+              </Menu>
+
           </NavLink>
           <NavLink className={({ isActive }) => isActive ? activeStyle : 'text-gray-600 hover:text-blue-700'} to="/" onClick={handleSignOut}>
             Cerrar sesión

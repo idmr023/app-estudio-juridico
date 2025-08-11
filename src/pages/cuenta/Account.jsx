@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faLock, faPlus, faCheck, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useContext } from 'react';
 import { ShoppingCartContext } from '../../contexts/CarritoContext';
+import ListaDeCasos from './ListaDeCasos';
 
 const Account = () => {
   const [mostrarDatos, setMostrarDatos] = useState(true);
@@ -42,7 +43,6 @@ const Account = () => {
 
   return (
     <div className="bg-[#17181A] min-h-screen p-6 text-white flex flex-col gap-10 items-center">
-      {/* Datos del cliente */}
       <div className="bg-gray-800 rounded-lg shadow-md p-6 w-full max-w-5xl">
         <h1 className="text-3xl font-bold text-center mb-4 text-white">Cuenta del Cliente</h1>
 
@@ -63,7 +63,6 @@ const Account = () => {
         </button>
       </div>
 
-      {/* Proceso Legal */}
       <div className="bg-gray-900 rounded-lg shadow-md p-6 w-full max-w-5xl">
         <h2 className="text-2xl font-bold text-white mb-4 text-center">Proceso Legal: Seguimiento</h2>
 
@@ -118,6 +117,7 @@ const Account = () => {
           </ul>
         )}
       </div>
+
     </div>
   );
 };
