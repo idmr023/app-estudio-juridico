@@ -63,24 +63,6 @@ export function MenuPrincipal() {
                         </a>
                       </MenuItem>
                     </NavLink>
-                    <MenuItem>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
-                      >
-                        License
-                      </a>
-                    </MenuItem>
-                    <form action="#" method="POST">
-                      <MenuItem>
-                        <button
-                          type="submit"
-                          className="block w-full px-4 py-2 text-left text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
-                        >
-                          Sign out
-                        </button>
-                      </MenuItem>
-                    </form>
                   </div>
                 </MenuItems>
               </Menu>
@@ -130,7 +112,7 @@ export function MenuPrincipal() {
                   dropdownOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
                 }`}
               >
-                {['all', 'fantasía', 'aventuras', 'others'].map((cat, i) => (
+                {['all', 'otros'].map((cat, i) => (
                   <NavLink
                     key={i}
                     to={`/carrito${cat !== 'all' ? `/${cat}` : ''}`}

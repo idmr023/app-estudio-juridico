@@ -24,7 +24,7 @@ function ListaDeCasos({ clienteDNI }) {
         setEstaCargando(true);
         setError(null);
 
-        axios.get(`http://localhost:3001/api/list_casos/${clienteDNI}`)
+        axios.get(`${process.env.REACT_APP_API_URL}/api/casos/list/${clienteDNI}`)
             .then(response => {
                 setCasos(response.data);
             })

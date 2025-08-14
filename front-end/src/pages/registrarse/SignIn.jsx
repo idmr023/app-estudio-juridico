@@ -21,48 +21,47 @@ export function SignIn() {
     }
   }, [context]);
 
-  const handleLogin = () => {
-    if (!dniLogin || !passwordLogin) {
-      alert("Faltan datos para iniciar sesión.");
-      return;
-    }
+// frontend/src/SignIn.jsx
 
-    axios.post('http://localhost:3001/api/login', {
-      dni: dniLogin,
-      password: passwordLogin
+const handleLogin = () => {
+  if (!dniLogin || !passwordLogin) {
+    alert("Faltan datos para iniciar sesión.");
+    return;
+  }
+
+  axios.post(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
+    dni: dniLogin,
+    password: passwordLogin
+  })
+    .then(res => {
+      // --- LA CORRECCIÓN CLAVE ESTÁ AQUÍ ---
+      if (res.data.status === 'Exito') {
+        
+        const userData = {
+          name: res.data.user.usr_nom,
+          dni: res.data.user.usr_dni,
+          email: res.data.user.usr_email,
+          img: res.data.user.usr_img
+        };
+
+        context.setAccount(userData);
+        context.setSignOut(false);
+        localStorage.setItem('account', JSON.stringify(userData));
+        localStorage.setItem('sign-out', JSON.stringify(false));
+        navigate('/cuenta');
+
+      } else {
+        alert(res.data.message || 'DNI o contraseña incorrectos');
+      }
     })
-      .then(res => {
-        if (res.data === 'Exito') {
-          axios.get(`http://localhost:3001/api/list_usr/${dniLogin}`)
-            .then(userRes => {
-              const userData = {
-                name: userRes.data[0].usr_nom,
-                dni: userRes.data[0].usr_dni,
-                email: userRes.data[0].usr_email
-              };
-
-              if (!userData) {
-                alert('No se encontraron datos del usuario.');
-                return;
-              }
-
-              context.setAccount(userData);
-              context.setSignOut(false);
-              localStorage.setItem('account', JSON.stringify(userData));
-              localStorage.setItem('sign-out', JSON.stringify(false));
-              navigate('/cuenta');
-            })
-            .catch(err => {
-              console.error('Error al obtener datos del usuario:', err);
-              alert('Error al obtener los datos del usuario');
-            });
-        } else {
-          alert('DNI o contraseña incorrectos');
-        }
-      })
-      .catch(err => {
+    .catch(err => {
+      if (err.response && err.response.data && err.response.data.message) {
+        alert(err.response.data.message);
+      } else {
         console.error('Error al iniciar sesión:', err);
-      });
+        alert('Ocurrió un error inesperado.');
+      }
+    });
   };
 
   const createAnAccount = () => {
@@ -73,7 +72,7 @@ export function SignIn() {
       password: form.current.password.value
     };
 
-    axios.post('http://localhost:3001/api/signup', formData)
+    axios.post(`${process.env.REACT_APP_API_URL}/api/auth/signup`, formData)
       .then(() => {
         alert('Cuenta creada con éxito. Ahora puedes iniciar sesión.');
         setView('user-info');

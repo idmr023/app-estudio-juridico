@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { ChatbotWidget } from './ChatbotWidget';
 
 const TimelineItem = ({ evento }) => (
     <div className="relative pl-8 pb-4">
@@ -20,7 +21,7 @@ const DocumentoItem = ({ doc }) => (
 );
 
 export function CasoDetallePage() {
-    const { caso_id } = useParams(); // Obtiene el ID del caso desde la URL
+    const { caso_id } = useParams();
     const [caso, setCaso] = useState(null);
     const [estaCargando, setEstaCargando] = useState(true);
     const [error, setError] = useState(null);
@@ -37,7 +38,7 @@ export function CasoDetallePage() {
             .finally(() => {
                 setEstaCargando(false);
             });
-    }, [caso_id]); // El efecto se re-ejecuta si el ID del caso cambia
+    }, [caso_id]);
 
     if (estaCargando) return <div className="text-center p-10">Cargando detalles del caso...</div>;
     if (error) return <div className="text-center p-10 text-red-500">{error}</div>;
@@ -46,7 +47,6 @@ export function CasoDetallePage() {
     return (
         <div className="bg-[#17181A] min-h-screen p-6 text-white flex flex-col items-center gap-8">
             
-            {/* -- CABECERA DEL CASO -- */}
             <div className="w-full max-w-5xl bg-gray-900 p-6 rounded-lg shadow-md">
                 <h1 className="text-3xl font-bold">{caso.caso_titulo}</h1>
                 <p className="text-teal-400 font-mono">{caso.caso_id}</p>
@@ -63,49 +63,75 @@ export function CasoDetallePage() {
             </div>
 
             <div className="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-2 gap-8">
-                
-                {/* -- COLUMNA IZQUIERDA: TIMELINE Y DOCUMENTOS -- */}
                 <div className="flex flex-col gap-8">
-                    {/* -- SECCIÓN TIMELINE -- */}
                     <div className="bg-gray-900 p-6 rounded-lg shadow-md">
                         <h2 className="text-xl font-bold mb-4">Historial del Caso</h2>
                         <div className="relative border-l-2 border-gray-700 ml-2">
-                            {caso.timeline.length > 0 ? (
+                            {caso.timeline && caso.timeline.length > 0 ? (
                                 caso.timeline.map(evento => <TimelineItem key={evento.evento_id} evento={evento} />)
                             ) : <p className="pl-4 text-gray-500">No hay eventos registrados.</p>}
                         </div>
                     </div>
                     
-                    {/* -- SECCIÓN DOCUMENTOS -- */}
                     <div className="bg-gray-900 p-6 rounded-lg shadow-md">
                         <h2 className="text-xl font-bold mb-4">Documentos</h2>
                         <div className="space-y-3">
-                           {caso.documentos.length > 0 ? (
+                           {caso.documentos && caso.documentos.length > 0 ? (
                                 caso.documentos.map(doc => <DocumentoItem key={doc.doc_id} doc={doc} />)
                             ) : <p className="text-gray-500">No hay documentos adjuntos.</p>}
                         </div>
                     </div>
                 </div>
 
-                {/* -- COLUMNA DERECHA: MENSAJERÍA -- */}
-                <div className="bg-gray-900 p-6 rounded-lg shadow-md flex flex-col h-full">
-                    <h2 className="text-xl font-bold mb-4">Mensajes con su Abogado</h2>
-                    <div className="flex-grow bg-gray-800 rounded-t-lg p-4 space-y-4 overflow-y-auto">
-                        {/* Aquí iría el mapeo de los mensajes */}
-                        {caso.mensajes.length > 0 ? (
-                            caso.mensajes.map(msg => (
-                                <div key={msg.mensaje_id} className="flex flex-col">
-                                    <span className="text-xs text-teal-400">{msg.nombre_remitente}</span>
-                                    <div className="bg-gray-700 p-3 rounded-lg max-w-xs">{msg.contenido_mensaje}</div>
-                                </div>
-                            ))
-                         ) : <p className="text-gray-500 text-center pt-10">Inicie la conversación.</p>}
+                {/* --- COLUMNA DERECHA: PANEL DE MANDO --- */}
+                <div className="flex flex-col gap-8">
+                    {/* --- Tarjeta para Subir Documentos --- */}
+                    <div className="bg-gray-900 p-6 rounded-lg shadow-md">
+                        <h2 className="text-xl font-bold mb-4">Adjuntar Nuevo Documento</h2>
+                        <div className="flex flex-col items-center p-6 border-2 border-dashed border-gray-700 rounded-lg">
+                            <p className="text-gray-400 mb-4">Arrastra un archivo aquí o selecciónalo</p>
+                            <input type="file" className="hidden" id="file-upload" />
+                            <label 
+                                htmlFor="file-upload" 
+                                className="cursor-pointer bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition"
+                            >
+                                Seleccionar Archivo
+                            </label>
+                        </div>
+                        <button className="w-full mt-4 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+                            Subir Documento
+                        </button>
                     </div>
-                    <div className="flex border-t-2 border-gray-700">
-                        <input type="text" placeholder="Escriba un mensaje..." className="flex-grow bg-gray-800 p-3 text-white focus:outline-none rounded-bl-lg" />
-                        <button className="bg-teal-500 px-6 font-bold hover:bg-teal-600 rounded-br-lg">Enviar</button>
+
+                    {/* --- Tarjeta para Acciones Rápidas --- */}
+                    <div className="bg-gray-900 p-6 rounded-lg shadow-md">
+                        <h2 className="text-xl font-bold mb-4">Acciones Rápidas</h2>
+                        <div className="space-y-3">
+                            <a 
+                                // Asumimos que la API devuelve 'caso.abogado_telefono'
+                                href={`https://wa.me/${caso.abogado_telefono}?text=Hola, te escribo sobre el caso ${caso.caso_id}`}
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="w-full flex items-center justify-center gap-3 text-lg bg-green-500 text-white py-3 rounded-lg hover:bg-green-600 transition"
+                            >
+                                <img src="https://png.pngtree.com/png-vector/20221018/ourmid/pngtree-whatsapp-icon-png-image_6315990.png" alt="WhatsApp" className="w-6 h-6" />
+                                Contactar a mi Abogado
+                            </a>
+                            
+                            <a 
+                                // Asumimos que la API devuelve 'caso.abogado_calendly'
+                                href={caso.abogado_calendly_url}
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="w-full flex items-center justify-center gap-3 text-lg bg-gray-700 text-white py-3 rounded-lg hover:bg-gray-600 transition"
+                            >
+                                🗓️ Agendar Reunión
+                            </a>
+                        </div>
                     </div>
                 </div>
+
+                <ChatbotWidget/>
             </div>
         </div>
     );
