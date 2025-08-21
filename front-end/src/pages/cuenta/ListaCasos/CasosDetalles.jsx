@@ -1,14 +1,11 @@
-// frontend/src/pages/CasoDetallePage.jsx
-
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-// CAMBIO: Se eliminó axios y se añadieron las importaciones de Firebase.
 import { doc, getDoc, collection, onSnapshot, orderBy, query } from "firebase/firestore";
-import { db, storage } from '../firebase-config'; // Asegúrate que la ruta a tu config es correcta
+import { db, storage } from '../../../../firebaseConfig';
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-import { ChatbotWidget } from './ChatbotWidget'; // Asumo que este componente está en la misma carpeta
+import { ChatbotWidget } from './ChatbotWidget';
 
 // --- SUB-COMPONENTES PARA MANTENER EL CÓDIGO LIMPIO ---
 
