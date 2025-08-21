@@ -6,7 +6,7 @@ import { ShoppingCartContext } from "../../contexts/CarritoContext";
 import CheckoutSideMenu from "./Components/CheckoutSideMenu";
 
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../firebase-config";
+import { db } from "../../firebaseConfig";
 
 function Banner() {
     return (

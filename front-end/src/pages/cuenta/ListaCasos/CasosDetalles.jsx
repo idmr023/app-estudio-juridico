@@ -2,15 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { doc, getDoc, collection, onSnapshot, orderBy, query } from "firebase/firestore";
-import { db, storage } from '../../../../firebaseConfig';
+import { db, storage } from '../../../firebaseConfig';
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 import { ChatbotWidget } from './ChatbotWidget';
 
-// --- SUB-COMPONENTES PARA MANTENER EL CÓDIGO LIMPIO ---
-
 const TimelineItem = ({ evento }) => {
-    // CAMBIO: Los Timestamps de Firebase son objetos, usamos el método .toDate() para convertirlos.
     const fecha = evento.fecha_evento?.toDate ? evento.fecha_evento.toDate() : new Date();
     return (
         <div className="relative pl-8 pb-4">
@@ -30,7 +27,6 @@ const DocumentoItem = ({ doc }) => (
     </a>
 );
 
-// MEJORA: Nuevo sub-componente para los mensajes del chat.
 const MensajeItem = ({ msg, userDni }) => {
     const isSentByUser = msg.remitente_dni === userDni;
     return (
@@ -46,33 +42,26 @@ const MensajeItem = ({ msg, userDni }) => {
 };
 
 
-// --- COMPONENTE PRINCIPAL DE LA PÁGINA ---
 export function CasoDetallePage() {
     const { caso_id } = useParams();
     const [caso, setCaso] = useState(null);
     const [estaCargando, setEstaCargando] = useState(true);
     const [error, setError] = useState(null);
 
-    // MEJORA: Estados para manejar la subida de archivos y los nuevos mensajes.
     const [selectedFile, setSelectedFile] = useState(null);
     const [isUploading, setIsUploading] = useState(false);
     const [newMessage, setNewMessage] = useState("");
 
-    // ===================================================================
-    // CAMBIO PRINCIPAL: Se reemplaza Axios por listeners en tiempo real de Firebase
-    // ===================================================================
     useEffect(() => {
         if (!caso_id) return;
         
         setEstaCargando(true);
         
-        // Listener para el documento principal del caso
         const casoDocRef = doc(db, "casos", caso_id);
         const unsubscribeCaso = onSnapshot(casoDocRef, async (docSnap) => {
             if (docSnap.exists()) {
                 const casoData = docSnap.data();
                 
-                // Obtenemos el nombre del abogado (esto no necesita ser en tiempo real)
                 let nombre_abogado = 'No asignado';
                 if (casoData.abogado_dni) {
                     const abogadoDoc = await getDoc(doc(db, "usuarios", String(casoData.abogado_dni)));
@@ -89,7 +78,6 @@ export function CasoDetallePage() {
             setError("No se pudo cargar la información del caso.");
         });
 
-        // Listeners para las sub-colecciones
         const eventosQuery = query(collection(db, "casos", caso_id, "eventos"), orderBy("fecha_evento", "desc"));
         const unsubscribeEventos = onSnapshot(eventosQuery, (snapshot) => {
             const timeline = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -105,14 +93,11 @@ export function CasoDetallePage() {
         const mensajesQuery = query(collection(db, "casos", caso_id, "mensajes"), orderBy("fecha_envio", "asc"));
         const unsubscribeMensajes = onSnapshot(mensajesQuery, (snapshot) => {
             const mensajes = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            // Aquí se podría enriquecer con los nombres de los remitentes si fuera necesario
             setCaso(prev => ({ ...prev, mensajes }));
         });
 
         setEstaCargando(false);
 
-        // Función de limpieza: se desuscribe de todos los listeners cuando el componente se desmonta.
-        // ¡Esto es crucial para evitar fugas de memoria!
         return () => {
             unsubscribeCaso();
             unsubscribeEventos();
@@ -122,8 +107,6 @@ export function CasoDetallePage() {
 
     }, [caso_id]);
 
-
-    // MEJORA: Función para manejar la subida de archivos a Firebase Storage
     const handleFileUpload = async () => {
         if (!selectedFile) return alert("Por favor, selecciona un archivo primero.");
         setIsUploading(true);
@@ -133,9 +116,6 @@ export function CasoDetallePage() {
         try {
             const snapshot = await uploadBytes(storageRef, selectedFile);
             const downloadURL = await getDownloadURL(snapshot.ref);
-
-            // Aquí añadirías la lógica para guardar la referencia del archivo en Firestore
-            // (en la sub-colección 'documentos' del caso).
 
             alert("Archivo subido con éxito.");
             setSelectedFile(null);
@@ -191,7 +171,6 @@ export function CasoDetallePage() {
                     </div>
                 </div>
 
-                {/* MEJORA: Panel de mando ahora es funcional */}
                 <div className="flex flex-col gap-8">
                     <div className="bg-gray-900 p-6 rounded-lg shadow-md">
                         <h2 className="text-xl font-bold mb-4">Adjuntar Nuevo Documento</h2>
