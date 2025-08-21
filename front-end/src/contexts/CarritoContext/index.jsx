@@ -1,8 +1,8 @@
-import axios from 'axios';
 import { useState, useEffect, createContext } from 'react';
-
+import { onAuthStateChanged } from "firebase/auth";
+import { collection, getDocs, doc, getDoc } from "firebase/firestore";
+import { auth, db } from '../../firebaseConfig';
 export const ShoppingCartContext = createContext();
-
 
 export function ShoppingCartProvider({ children }) {
     // My account
@@ -13,18 +13,45 @@ export function ShoppingCartProvider({ children }) {
     const [servicios, setServicios] = useState([]);
     const [filteredItems, setFilteredItems] = useState(null);
 
-    // Get services from backend
     useEffect(() => {
-        axios.get('http://localhost:3001/api/servicios')
-            .then(response => setServicios(response.data))
-            .catch(error => console.error("Error al obtener servicios:", error));
+        const getServiciosFromFirebase = async () => {
+            try {
+                const serviciosCollectionRef = collection(db, "servicios");
+                const data = await getDocs(serviciosCollectionRef);
+                const serviciosList = data.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                setServicios(serviciosList);
+            } catch (error) {
+                console.error("Error al obtener servicios de Firebase:", error);
+            }
+        };
+        getServiciosFromFirebase();
     }, []);
 
     useEffect(() => {
-        const accountLS = JSON.parse(localStorage.getItem('account') || '{}');
-        const signOutLS = JSON.parse(localStorage.getItem('sign-out') || 'false');
-        setAccount(accountLS);
-        setSignOut(signOutLS);
+        const unsubscribe = onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                const userDocRef = doc(db, "usuarios", user.uid);
+                const docSnap = await getDoc(userDocRef);
+                
+                if (docSnap.exists()) {
+                    setAccount(docSnap.data());
+                } else {
+                    setAccount({
+                        usr_email: user.email,
+                        usr_nom: user.displayName
+                    });
+                }
+                setSignOut(false);
+                localStorage.setItem('sign-out', 'false');
+            } else {
+                setAccount(null);
+                setSignOut(true);
+                localStorage.removeItem('account');
+                localStorage.setItem('sign-out', 'true');
+            }
+        });
+
+        return () => unsubscribe();
     }, []);
 
     // Carrito

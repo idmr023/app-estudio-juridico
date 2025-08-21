@@ -108,7 +108,6 @@ export function SignIn() {
   const renderCreateUserInfo = () => (
     <div className="max-w-sm w-full mt-20 mx-auto">
       <form ref={form} onSubmit={createAnAccount} className='bg-white p-8 rounded-xl shadow-md flex flex-col gap-4'>
-        {/* ... inputs del formulario de registro ... */}
         <div className='flex flex-col gap-2'>
           <label htmlFor="email">Correo electrónico</label>
           <input name="email" type="email" required placeholder="correo@ejemplo.com" />
