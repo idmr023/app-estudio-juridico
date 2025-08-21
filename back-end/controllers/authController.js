@@ -1,61 +1,94 @@
-const db = require('../config/db');
+// 1. IMPORTACIONES
+const { db } = require('../config/firebase'); // Importamos la instancia de Firestore
 const handleError = require('../utils/handleError');
 const usrIMG = require('../utils/usrIMG');
-// ¡IMPORTANTE! Deberías añadir bcrypt para la seguridad de las contraseñas
-// const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
+const saltRounds = 10; // Factor de seguridad para el hasheo
 
-exports.obtenerUsuario = (req, res) => {
-  const dni = req.params.dni;
-  const sql = 'SELECT usr_dni, usr_nom, usr_email, usr_img FROM usuario WHERE usr_dni = ?';
-  db.query(sql, [dni], (err, result) => {
-    if (err) return handleError(res, err, 'obtener usuario por dni');
-    if (result.length === 0) return res.status(404).json({ message: 'Usuario no encontrado' });
-    res.json(result[0]);
-  });
+// 2. OBTENER DATOS DE UN USUARIO POR DNI
+exports.obtenerUsuario = async (req, res) => {
+    try {
+        const dni = req.params.dni;
+        const userDocRef = db.collection('usuarios').doc(String(dni));
+        const doc = await userDocRef.get();
+
+        if (!doc.exists) {
+            return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+        
+        // Excluimos la contraseña antes de enviar los datos
+        const { usr_pswd, ...userData } = doc.data();
+        res.json(userData);
+
+    } catch (err) {
+        handleError(res, err, 'obtener usuario por dni');
+    }
 };
 
-exports.registrarUsuario = (req, res) => {
-  const nuevoUsuario = {
-    usr_nom: req.body.name, usr_dni: req.body.dni, usr_email: req.body.email,
-    usr_pswd: req.body.password, // Aquí deberías hashear la contraseña con bcrypt
-    usr_img: usrIMG(req.body.name)
-  };
-  const sql = 'INSERT INTO usuario SET ?';
-  db.query(sql, nuevoUsuario, (err, result) => {
-    if (err) {
-      if (err.code === 'ER_DUP_ENTRY') return res.status(409).json({ message: 'El DNI o el correo ya están registrados.' });
-      return handleError(res, err, 'registrar usuario');
+exports.registrarUsuario = async (req, res) => {
+    try {
+        const { name, dni, email, password } = req.body;
+        const userDocRef = db.collection('usuarios').doc(String(dni));
+
+        const doc = await userDocRef.get();
+        if (doc.exists) {
+            return res.status(409).json({ message: 'El DNI ya está registrado.' });
+        }
+
+        // Hasheamos la contraseña ANTES de guardarla (¡MUY IMPORTANTE!)
+        const hashedPassword = bcrypt.hashSync(password, saltRounds);
+
+        const nuevoUsuario = {
+            usr_nom: name,
+            usr_dni: Number(dni), // Guardamos el DNI como número
+            usr_email: email,
+            usr_pswd: hashedPassword, // Guardamos el HASH, no la contraseña real
+            usr_img: usrIMG(name),
+            rol: 'cliente' // Asignamos un rol por defecto
+        };
+        
+        // Creamos el nuevo documento de usuario
+        await userDocRef.set(nuevoUsuario);
+
+        res.status(201).json({ message: 'Usuario registrado con éxito' });
+
+    } catch (err) {
+        handleError(res, err, 'registrar usuario');
     }
-    res.status(201).json({ message: 'Usuario registrado con éxito', userId: result.insertId });
-  });
 };
 
-// backend/controllers/authController.js
+// 4. INICIAR SESIÓN DE UN USUARIO
+exports.iniciarSesion = async (req, res) => {
+    try {
+        const { dni, password } = req.body;
+        console.log('--- INTENTO DE LOGIN RECIBIDO ---', { dni, password });
 
-exports.iniciarSesion = (req, res) => {
-  const { dni, password } = req.body;
+        const userDocRef = db.collection('usuarios').doc(String(dni));
+        const doc = await userDocRef.get();
 
-  // --- LÍNEAS DE DEPURACIÓN CRUCIALES ---
-  console.log('--- INTENTO DE LOGIN RECIBIDO EN EL CONTROLADOR ---');
-  console.log('Datos recibidos en req.body:', req.body);
-  console.log(`Buscando DNI (tipo: ${typeof dni}):`, dni);
-  console.log(`Buscando Contraseña (tipo: ${typeof password}):`, password);
-  // ------------------------------------
+        // Primero, verificamos si el usuario (DNI) existe
+        if (!doc.exists) {
+            console.log(`Login fallido: DNI ${dni} no encontrado.`);
+            return res.status(401).json({ status: 'Falla', message: 'DNI o contraseña incorrectos.' });
+        }
 
-  const sql = 'SELECT * FROM usuario WHERE usr_dni = ? AND usr_pswd = ?';
-  
-  db.query(sql, [dni, password], (err, data) => {
-    if (err) return handleError(res, err, 'iniciar sesión');
-    
-    // --- LÍNEA DE DEPURACIÓN ADICIONAL ---
-    console.log(`La consulta SQL encontró ${data.length} filas.`);
-    // ------------------------------------
+        const userData = doc.data();
+        const hashedPasswordInDB = userData.usr_pswd;
 
-    if (data.length > 0) {
-      const { usr_pswd, ...userData } = data[0];
-      res.json({ status: 'Exito', user: userData });
-    } else {
-      res.status(401).json({ status: 'Falla', message: 'DNI o contraseña incorrectos.' });
+        // Segundo, comparamos la contraseña enviada con el hash guardado en la BD
+        const passwordIsValid = bcrypt.compareSync(password, hashedPasswordInDB);
+        
+        console.log(`La comparación de contraseña para DNI ${dni} fue: ${passwordIsValid}`);
+
+        if (passwordIsValid) {
+            // ¡Éxito! Excluimos la contraseña del objeto que devolvemos
+            const { usr_pswd, ...user } = userData;
+            res.json({ status: 'Exito', user: user });
+        } else {
+            // La contraseña no coincide
+            res.status(401).json({ status: 'Falla', message: 'DNI o contraseña incorrectos.' });
+        }
+    } catch (err) {
+        handleError(res, err, 'iniciar sesión');
     }
-  });
 };

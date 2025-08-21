@@ -1,0 +1,21 @@
+[debug] [2025-08-20T01:29:57.286Z] ----------------------------------------------------------------------
+[debug] [2025-08-20T01:29:57.288Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\idmr_\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init functions
+[debug] [2025-08-20T01:29:57.288Z] CLI Version:   14.12.1
+[debug] [2025-08-20T01:29:57.288Z] Platform:      win32
+[debug] [2025-08-20T01:29:57.288Z] Node Version:  v22.18.0
+[debug] [2025-08-20T01:29:57.289Z] Time:          Tue Aug 19 2025 20:29:57 GMT-0500 (hora estándar de Perú)
+[debug] [2025-08-20T01:29:57.289Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-08-20T01:29:57.293Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-08-20T01:29:57.294Z] > authorizing via signed-in user (jparatupcya@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\idmr_\OneDrive\Escritorio\ProyectoAbogado
+

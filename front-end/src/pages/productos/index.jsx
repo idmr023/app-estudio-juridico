@@ -4,9 +4,10 @@ import { faArrowUp, faCheck, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { GoUpContext } from "../../contexts/GoUp/GoUpContext";
 import { ShoppingCartContext } from "../../contexts/CarritoContext";
 import CheckoutSideMenu from "./Components/CheckoutSideMenu";
-import axios from "axios";
 
-// COMPONENTE: Banner
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebase-config";
+
 function Banner() {
     return (
         <section className="w-full bg-slate-600 mb-10">
@@ -37,8 +38,8 @@ const AddItemButton = ({ isInCart, onToggle }) => (
             isInCart ? "bg-black" : "bg-white"
         } w-6 h-6 rounded-full m-2 p-1`}
         onClick={(e) => {
-            e.stopPropagation(); // evita abrir ProductDetail
-            onToggle(); // agrega o quita del carrito
+            e.stopPropagation();
+            onToggle();
         }}
     >
         <FontAwesomeIcon
@@ -48,21 +49,24 @@ const AddItemButton = ({ isInCart, onToggle }) => (
     </div>
 );
 
-// COMPONENTE: Card de servicio
 const Card = ({ data }) => {
     const context = useContext(ShoppingCartContext);
 
-    const id = data.srv_id;
+    // CAMBIO: Usamos 'id' de Firestore en lugar de 'srv_id' de MySQL.
+    // Esto hace el código consistente con la nueva fuente de datos.
+    const id = data.id; 
     const titulo = data.srv_nombre || "Sin nombre";
     const precio = data.srv_precio || 0;
     const imagen = data.srv_imagen;
-    const categoria = data.srv_categoria || "General";
+    // CAMBIO: Firestore no tiene un campo 'srv_categoria', así que usamos 'srv_tipo'.
+    const categoria = data.srv_tipo || "General";
 
-    const isInCart = context.cartProducts.some(p => p.srv_id === id);
+    // CAMBIO: La lógica del carrito ahora usa 'id' en lugar de 'srv_id'.
+    const isInCart = context.cartProducts.some(p => p.id === id);
 
     const toggleCart = () => {
         if (isInCart) {
-            const updatedCart = context.cartProducts.filter(p => p.srv_id !== id);
+            const updatedCart = context.cartProducts.filter(p => p.id !== id);
             context.setCartProducts(updatedCart);
             context.setCount(prev => prev - 1);
         } else {
@@ -110,25 +114,47 @@ const IconoSubir = ({ showButton, scrollToTop }) => (
     </div>
 );
 
-// COMPONENTE PRINCIPAL
 export const Productos = () => {
     const context = useContext(ShoppingCartContext);
     const { showButton, scrollToTop } = useContext(GoUpContext);
 
+    // ===================================================================
+    // CAMBIO PRINCIPAL: Se reemplaza la llamada de Axios por Firestore
+    // ===================================================================
     useEffect(() => {
-        axios.get("http://localhost:3001/api/servicios")
-            .then(response => {
-                context.setServicios(response.data);
-            })
-            .catch(error => {
-                console.error("Error al obtener servicios:", error);
-            });
-    }, []);
+        // Se define una función asíncrona para poder usar 'await'
+        const getServiciosFromFirebase = async () => {
+            try {
+                // 1. Obtenemos una referencia a la colección 'servicios' en Firestore.
+                const serviciosCollectionRef = collection(db, "servicios");
+                
+                // 2. Ejecutamos la consulta para obtener todos los documentos.
+                const data = await getDocs(serviciosCollectionRef);
+
+                // 3. Mapeamos el resultado a un array de objetos que nuestro componente entiende.
+                //    Añadimos el 'id' único de Firestore a cada objeto.
+                const serviciosList = data.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+
+                // 4. Actualizamos el estado global en nuestro contexto.
+                context.setServicios(serviciosList);
+
+            } catch (error) {
+                console.error("Error al obtener servicios de Firebase:", error);
+            }
+        };
+
+        // Llamamos a la función para que se ejecute al montar el componente.
+        getServiciosFromFirebase();
+    }, []); // El array vacío asegura que se ejecute solo una vez.
 
     const renderView = () => {
         if (context.filteredItems?.length > 0) {
+            // CAMBIO: Ahora la 'key' debe ser 'servicio.id' para coincidir con Firestore.
             return context.filteredItems.map(servicio => (
-                <Card key={servicio.srv_id} data={servicio} />
+                <Card key={servicio.id} data={servicio} />
             ));
         } else {
             return <div className="text-white">No hay servicios disponibles.</div>;

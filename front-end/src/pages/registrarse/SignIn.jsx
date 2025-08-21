@@ -21,8 +21,6 @@ export function SignIn() {
     }
   }, [context]);
 
-// frontend/src/SignIn.jsx
-
 const handleLogin = () => {
   if (!dniLogin || !passwordLogin) {
     alert("Faltan datos para iniciar sesión.");
@@ -64,41 +62,65 @@ const handleLogin = () => {
     });
   };
 
-  const createAnAccount = () => {
-    const formData = {
-      name: form.current.name.value,
-      dni: parseInt(form.current.dni.value, 10),
-      email: form.current.email.value,
-      password: form.current.password.value
-    };
+  const createAnAccount = (event) => {
+    event.preventDefault();
+    const name = form.current.name.value;
+    const dni = form.current.dni.value;
+    const email = form.current.email.value;
+    const password = form.current.password.value;
 
-    axios.post(`${process.env.REACT_APP_API_URL}/api/auth/signup`, formData)
-      .then(() => {
-        alert('Cuenta creada con éxito. Ahora puedes iniciar sesión.');
-        setView('user-info');
-        setDniLogin(formData.dni);
-        setPasswordLogin(formData.password);
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        
+        // 1. Actualizamos el perfil del usuario en Firebase Auth (para el nombre)
+        updateProfile(user, { displayName: name });
+
+        // 2. Creamos un documento en Firestore para guardar datos adicionales (DNI, rol, etc.)
+        // Usamos el UID del usuario como ID del documento, es más seguro y estándar.
+        const userDocRef = doc(db, "usuarios", user.uid);
+        setDoc(userDocRef, {
+            usr_nom: name,
+            usr_dni: Number(dni),
+            usr_email: email,
+            rol: 'cliente',
+            usr_img: `https://ui-avatars.com/api/?background=random&name=${encodeURIComponent(name)}`
+        });
+
+        alert('Cuenta creada con éxito. Por favor, inicia sesión.');
+        setView('log-in');
       })
-      .catch(err => {
-        console.error('Error al registrarse:', err);
-        alert('Error al registrarse. Revisa los datos.');
+      .catch((error) => {
+        console.error('Error al registrarse:', error.code, error.message);
+        if (error.code === 'auth/email-already-in-use') {
+            alert('Este correo electrónico ya está registrado.');
+        } else {
+            alert('Error al registrarse. Revisa los datos.');
+        }
       });
   };
 
   const toggleHijo = () => setMostrarHijo(!mostrarHijo);
 
   const renderLogIn = () => (
-    <div className="max-w-sm w-full mt-20 mx-auto">
+    // CAMBIO: El <div> exterior se ha convertido en un <form> para un HTML semántico.
+    // CAMBIO: Se ha añadido el evento onSubmit al formulario.
+    <form onSubmit={handleLogin} className="max-w-sm w-full mt-20 mx-auto"> 
       <div className='bg-white p-8 rounded-xl shadow-md flex flex-col gap-4'>
+        {/*
+          CAMBIO: Se cambió el input de DNI por Email para el login.
+          Firebase Authentication está optimizado para usar email como identificador principal.
+          Esto simplifica y asegura enormemente el proceso.
+        */}
         <div className='flex flex-col gap-2'>
-          <label htmlFor="dni">DNI</label>
+          <label htmlFor="email">Correo electrónico</label>
           <input
-            name="dni"
-            type="number"
+            name="email"
+            type="email"
             required
-            placeholder="76467750"
-            value={dniLogin}
-            onChange={(e) => setDniLogin(e.target.value)}
+            placeholder="correo@ejemplo.com"
+            value={emailLogin}
+            onChange={(e) => setEmailLogin(e.target.value)}
           />
         </div>
 
@@ -113,21 +135,32 @@ const handleLogin = () => {
             onChange={(e) => setPasswordLogin(e.target.value)}
           />
         </div>
-
-        <BotonSbt onClick={handleLogin}>Iniciar sesión</BotonSbt>
+        
+        {/*
+          CAMBIO: Se ha cambiado el onClick por type="submit".
+          Ahora, al hacer clic en este botón (o presionar Enter en un campo), se activará el
+          evento onSubmit del formulario, que llama a handleLogin.
+        */}
+        <BotonSbt type="submit">Iniciar sesión</BotonSbt>
 
         <div className='text-center'>
           <a href='/' className='text-sm text-blue-600 underline'>¿Olvidaste tu contraseña?</a>
         </div>
 
-        <BotonSbt2 onClick={() => setView('create-user-info')}>Registrarse</BotonSbt2>
+        {/* CAMBIO: Se ha añadido type="button" explícitamente para evitar que este
+            botón envíe el formulario. */}
+        <BotonSbt2 type="button" onClick={() => setView('create-user-info')}>Registrarse</BotonSbt2>
       </div>
-    </div>
+    </form>
   );
 
   const renderCreateUserInfo = () => (
     <div className="max-w-sm w-full mt-20 mx-auto">
-      <form ref={form} className='bg-white p-8 rounded-xl shadow-md flex flex-col gap-4'>
+      {/*
+        CAMBIO: Se ha añadido el evento onSubmit al formulario, que ahora llama a createAnAccount.
+        Esto permite enviar el formulario presionando Enter.
+      */}
+      <form ref={form} onSubmit={createAnAccount} className='bg-white p-8 rounded-xl shadow-md flex flex-col gap-4'>
         <div className='flex flex-col gap-2'>
           <label htmlFor="email">Correo electrónico</label>
           <input name="email" type="email" required placeholder="correo@ejemplo.com" />
@@ -145,10 +178,18 @@ const handleLogin = () => {
 
         <div className='flex flex-col gap-2'>
           <label htmlFor="password">Contraseña</label>
-          <input name="password" type="text" required placeholder="********" />
+          {/*
+            CAMBIO: Se ha cambiado el type="text" a type="password".
+            Esto es una práctica de seguridad fundamental para ocultar la contraseña mientras se escribe.
+          */}
+          <input name="password" type="password" required placeholder="********" />
         </div>
 
-        <BotonSbt type='button' onClick={createAnAccount}>Crear cuenta</BotonSbt>
+        {/*
+          CAMBIO: Se ha cambiado el onClick por type="submit".
+          Ahora es el botón principal para enviar el formulario de registro.
+        */}
+        <BotonSbt type="submit">Crear cuenta</BotonSbt>
 
         <button type='button' onClick={toggleHijo} className='text-sm text-blue-700 underline'>
           Generar contraseña segura
@@ -167,7 +208,6 @@ const handleLogin = () => {
   );
 }
 
-// COMPONENTE DE GENERADOR DE CONTRASEÑAS
 function PasswordGenerator() {
   const encriptar = () => {
     const input = document.getElementById('input__msj');
