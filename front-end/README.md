@@ -1,15 +1,3 @@
-¡Absolutamente! Has hecho una excelente refactorización y ahora tu `frontend` es un proyecto independiente que merece su propio "manual de instrucciones".
-
-Un buen `README.md` dentro de la carpeta `front-end` es crucial. Le dice a cualquier desarrollador (¡incluido tu "yo" del futuro!) exactamente qué es esta parte del proyecto, qué tecnologías usa y, lo más importante, cómo ejecutarla.
-
-He creado un `README.md` completo y profesional para tu carpeta `front-end`, inspirado en las mejores prácticas y adaptado a tu stack tecnológico.
-
----
-
-### `README.md` para la Carpeta `front-end`
-
-Copia y pega el siguiente contenido en un nuevo archivo llamado `README.md` dentro de la raíz de tu carpeta `front-end`.
-
 ```markdown
 <a name="readme-top"></a>
 
