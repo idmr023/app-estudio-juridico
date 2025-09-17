@@ -1,6 +1,6 @@
 <a name="readme-top"></a>
 
-# Proyecto Abogado - Frontend (Cliente)
+# Proyecto Abogado - Frontend
 
 Este directorio contiene el código fuente de la aplicación de cliente para el **Proyecto Abogado**, desarrollada con React. Esta aplicación se encarga de toda la interfaz de usuario, la interacción con el cliente y la comunicación con los servicios de backend y Firebase.
 
