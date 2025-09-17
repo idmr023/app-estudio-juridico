@@ -4,8 +4,8 @@ import { ShoppingCartContext } from '../../contexts/CarritoContext';
 import SwitcherTema from 'componentes/SwitcherTema';
 import { useTheme } from 'contexts/ThemeContext/ThemeContext';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
-import { FontAwesomeIcon } from '../../../node_modules/@fortawesome/react-fontawesome/index';
-import { faCaretDown } from '../../../node_modules/@fortawesome/free-solid-svg-icons/index';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons/index';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome/index';
 
 export function MenuPrincipal() {
   const context = useContext(ShoppingCartContext);
