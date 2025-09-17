@@ -29,23 +29,19 @@ Para la documentación general del proyecto y la arquitectura completa, por favo
 ## Estructura de Carpetas
 
 La estructura del código fuente sigue un enfoque modular para facilitar la mantenibilidad y escalabilidad.
-/front-end
-|
-|-- /public/ # Archivos estáticos y index.html
-|
-|-- /src/
-| |-- /components/ # Componentes reutilizables (Botones, Cards, etc.)
-| |-- /contexts/ # Proveedores de Contexto para el estado global
-| |-- /pages/ # Componentes que representan páginas completas
-| |-- App.jsx # Componente raíz y definición de rutas
-| |-- index.jsx # Punto de entrada de la aplicación
-| |-- firebase-config.js # Configuración de la conexión con Firebase
-|
-|-- .env # Archivo para variables de entorno (NO versionado)
-|-- .gitignore
-|-- package.json
-code
-Code
+
+**/front-end**
+*   **/public/** - Archivos estáticos y `index.html`
+*   **/src/**
+    *   **/components/** - Componentes reutilizables (Botones, Cards, etc.)
+    *   **/contexts/** - Proveedores de Contexto para el estado global
+    *   **/pages/** - Componentes que representan páginas completas
+    *   `App.jsx` - Componente raíz y definición de rutas
+    *   `index.jsx` - Punto de entrada de la aplicación
+    *   `firebase-config.js` - Configuración de la conexión con Firebase
+*   `.env` - Archivo para variables de entorno (NO versionado)
+*   `.gitignore`
+*   `package.json`
 ## Funcionalidades Clave
 
 *   **Autenticación de Usuarios:** Registro e inicio de sesión gestionados por **Firebase Authentication**.
