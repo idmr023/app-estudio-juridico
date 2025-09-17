@@ -1,103 +1,105 @@
-```markdown
 <a name="readme-top"></a>
 
-# Frontend: Portal de Cliente - Proyecto Abogado
+# Proyecto Abogado - Frontend (Cliente)
 
-Este directorio contiene el código fuente de la aplicación de React para el "Proyecto Abogado". Es la interfaz de usuario con la que interactúan los clientes, construida como una Single-Page Application (SPA) moderna y responsiva.
+Este directorio contiene el código fuente de la aplicación de cliente para el **Proyecto Abogado**, desarrollada con React. Esta aplicación se encarga de toda la interfaz de usuario, la interacción con el cliente y la comunicación con los servicios de backend y Firebase.
 
-Esta aplicación se conecta a un backend desacoplado (Firebase y Node.js) para obtener y gestionar todos los datos.
+Para la documentación general del proyecto y la arquitectura completa, por favor, consulte el [README principal del repositorio]( ../README.md).
 
-## ✨ Funcionalidades Clave
+## Tabla de Contenidos
+1.  [Stack Tecnológico](#stack-tecnológico)
+2.  [Estructura de Carpetas](#estructura-de-carpetas)
+3.  [Funcionalidades Clave](#funcionalidades-clave)
+4.  [Configuración del Entorno Local](#configuración-del-entorno-local)
+5.  [Scripts Disponibles](#scripts-disponibles)
+6.  [Variables de Entorno](#variables-de-entorno)
 
--   **Autenticación de Usuarios:** Sistema completo de registro e inicio de sesión gestionado por **Firebase Authentication**.
--   **Portal de Cliente Seguro:** Un dashboard privado (`/cuenta`) donde los clientes pueden ver el estado de sus casos.
--   **Lista de Casos:** Visualización de todos los casos asociados a un cliente, obtenidos desde Firestore.
--   **Detalle de Caso en Tiempo Real:** Una página dedicada por caso que se actualiza instantáneamente con los cambios en la base de datos (nuevos mensajes, documentos, etc.) gracias a los listeners de Firestore.
--   **Catálogo de Servicios:** Muestra de los servicios legales ofrecidos.
--   **Carrito de Compras:** Funcionalidad de e-commerce para la contratación de servicios.
--   **Asistente Virtual con IA:** Un widget de chat que se conecta a una API de LangChain para responder preguntas frecuentes.
--   **Diseño Responsivo:** Interfaz completamente adaptable a dispositivos móviles y de escritorio gracias a **Tailwind CSS**.
+---
 
-## 🚀 Stack Tecnológico
+## Stack Tecnológico
 
--   **Framework:** [![React][React.js]][React-url]
--   **Build Tool:** [![Vite][Vite.js]][Vite-url]
--   **Enrutamiento:** React Router
--   **Estilos:** [![TailwindCSS][Tailwind.css]][Tailwind-url]
--   **Backend Services:** [![Firebase][Firebase.com]][Firebase-url] (Auth, Firestore, Storage)
--   **Peticiones HTTP:** Axios (para la API del chatbot)
--   **Iconos:** FontAwesome
+*   **Framework Principal:** [React](https://reactjs.org/)
+*   **Herramienta de Build:** [Vite](https://vitejs.dev/)
+*   **Estilos:** [Tailwind CSS](https://tailwindcss.com/)
+*   **Enrutamiento:** [React Router DOM](https://reactrouter.com/)
+*   **Cliente HTTP:** [Axios](https://axios-http.com/) (para la comunicación con la API del backend)
+*   **Servicios de Backend:** [Firebase SDK](https://firebase.google.com/) (para Autenticación, Firestore y Storage)
+*   **Gestión de Estado:** React Context API
 
-## 🛠️ Configuración y Puesta en Marcha
+## Estructura de Carpetas
 
-Para ejecutar este proyecto en tu entorno local, sigue estos pasos.
+La estructura del código fuente sigue un enfoque modular para facilitar la mantenibilidad y escalabilidad.
+/front-end
+|
+|-- /public/ # Archivos estáticos y index.html
+|
+|-- /src/
+| |-- /components/ # Componentes reutilizables (Botones, Cards, etc.)
+| |-- /contexts/ # Proveedores de Contexto para el estado global
+| |-- /pages/ # Componentes que representan páginas completas
+| |-- App.jsx # Componente raíz y definición de rutas
+| |-- index.jsx # Punto de entrada de la aplicación
+| |-- firebase-config.js # Configuración de la conexión con Firebase
+|
+|-- .env # Archivo para variables de entorno (NO versionado)
+|-- .gitignore
+|-- package.json
+code
+Code
+## Funcionalidades Clave
 
-### Prerrequisitos
+*   **Autenticación de Usuarios:** Registro e inicio de sesión gestionados por **Firebase Authentication**.
+*   **Portal de Cliente:** Área privada para usuarios autenticados.
+*   **Visualización de Casos:** Lista y vista de detalle de casos legales, con actualizaciones en **tiempo real** desde Cloud Firestore.
+*   **Gestión de Documentos:** (Futuro) Interfaz para subir y descargar archivos asociados a un caso, utilizando **Firebase Storage**.
+*   **Asistente Virtual:** Widget de chat interactivo que se comunica con la API de IA del backend.
+*   **Carrito de Compras:** Lógica para seleccionar y gestionar servicios.
 
--   Node.js (v18 o superior)
--   npm o yarn
+## Configuración del Entorno Local
 
-### Instalación
+Para ejecutar esta aplicación en tu máquina local, sigue estos pasos:
 
-1.  **Navega a este directorio**
-    Asegúrate de que tu terminal esté dentro de la carpeta `front-end`.
+1.  **Navega a la carpeta del frontend:**
+    ```sh
+    cd front-end
+    ```
 
-2.  **Instala las dependencias**
+2.  **Instala las dependencias:**
     ```sh
     npm install
     ```
 
-3.  **Configura las Variables de Entorno**
-    -   Crea un archivo llamado `.env` en la raíz de este directorio (`front-end/.env`).
-    -   Este archivo es **ignorado por Git** y contendrá tus claves secretas.
+3.  **Configura las variables de entorno:**
+    - Crea un archivo llamado `.env` en la raíz de la carpeta `/front-end`.
+    - Añade las siguientes variables (reemplaza los valores con tu configuración específica):
+      ```
+      # URL donde corre tu servidor de backend local
+      REACT_APP_API_URL=http://localhost:3001
 
-4.  **Configura Firebase**
-    -   Crea un archivo `firebase-config.js` en la carpeta `src`.
-    -   Ve a tu [Consola de Firebase](https://console.firebase.google.com/), selecciona tu proyecto, ve a "Configuración del proyecto" y copia el objeto de configuración web (`firebaseConfig`).
-    -   Pega esa configuración en tu archivo `firebase-config.js`.
+      # (Opcional si usas los emuladores de Firebase)
+      # No necesitas poner las claves de Firebase aquí si la configuración
+      # en firebase-config.js está completa.
+      ```
 
-5.  **Configura la URL de la API del Backend**
-    -   Abre tu archivo `.env` y añade la siguiente línea. Esta variable apunta a tu servidor local de Node.js/Express donde corre la API (incluido el chatbot).
+4.  **Ejecuta la aplicación:**
+    ```sh
+    npm start
     ```
-    REACT_APP_API_URL=http://localhost:3001
-    ```
+    La aplicación se abrirá automáticamente en [http://localhost:3000](http://localhost:3000).
 
-### Scripts Disponibles
+## Scripts Disponibles
 
 En el directorio del proyecto, puedes ejecutar:
 
--   `npm start`
-    Inicia la aplicación en modo de desarrollo. Ábrela en [http://localhost:3000](http://localhost:3000) en tu navegador. La página se recargará si haces cambios.
+*   `npm start`: Inicia la aplicación en modo de desarrollo.
+*   `npm run build`: Construye la aplicación para producción en la carpeta `build`.
+*   `npm test`: Ejecuta el corredor de pruebas en modo interactivo.
+*   `npm run eject`: Expulsa la configuración de Create React App (acción irreversible).
 
--   `npm run build`
-    Construye la aplicación para producción en la carpeta `build`. Empaqueta React correctamente en modo de producción y optimiza la compilación para el mejor rendimiento.
+## Variables de Entorno
 
--   `npm test`
-    Inicia el corredor de pruebas en modo interactivo.
+Esta aplicación utiliza un archivo `.env` para gestionar las claves y URLs de configuración. Asegúrate de tenerlo configurado antes de iniciar la aplicación.
 
-## 📁 Estructura de Carpetas
+*   `REACT_APP_API_URL`: La URL base del servidor backend. Es crucial para que las llamadas a la API (como la del chatbot) funcionen.
 
-El código fuente está organizado de la siguiente manera:
-
-```
-/src
-|-- /components/      # Componentes de UI reutilizables (Botones, Cards, etc.)
-|-- /contexts/        # Proveedores de Contexto para el estado global (Carrito, Cuenta)
-|-- /pages/           # Componentes que representan una página completa (Home, SignIn, Cuenta)
-|-- firebase-config.js  # Archivo de configuración y conexión con Firebase
-|-- App.js            # Componente principal y enrutador de la aplicación
-|-- index.js          # Punto de entrada de la aplicación
-```
-
-<p align="right">(<a href="#readme-top">Volver a arriba</a>)</p>
-
-<!-- MARKDOWN LINKS & IMAGES -->
-[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[React-url]: https://reactjs.org/
-[Vite.js]: https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white
-[Vite-url]: https://vitejs.dev/
-[Tailwind.css]: https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white
-[Tailwind-url]: https://tailwindcss.com/
-[Firebase.com]: https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black
-[Firebase-url]: https://firebase.google.com/
-```
+<p align="right">(<a href="#readme-top">volver a arriba</a>)</p>
