@@ -1,155 +1,115 @@
-```markdown
-# Proyecto Abogado - Frontend
+¡Absolutamente! Has hecho una excelente refactorización y ahora tu `frontend` es un proyecto independiente que merece su propio "manual de instrucciones".
 
-Esta carpeta contiene el código fuente de la aplicación de cliente para el "Proyecto Abogado". Es una Single-Page Application (SPA) construida con React y Vite, diseñada para ofrecer una experiencia de usuario rápida, moderna y responsiva.
+Un buen `README.md` dentro de la carpeta `front-end` es crucial. Le dice a cualquier desarrollador (¡incluido tu "yo" del futuro!) exactamente qué es esta parte del proyecto, qué tecnologías usa y, lo más importante, cómo ejecutarla.
 
-## Funcionalidades Clave
-
-- **Autenticación de Usuarios:** Registro e inicio de sesión seguros gestionados a través del SDK de Firebase Authentication.
-- **Catálogo de Servicios:** Visualización dinámica de los servicios legales, obtenidos en tiempo real desde Firestore.
-- **Portal de Cliente:** Un área privada y segura (`/cuenta`) donde los usuarios pueden:
-  - Ver una lista de todos sus casos legales.
-  - Acceder a una página de **detalle de caso** con actualizaciones en tiempo real (timeline, documentos, mensajes).
-- **Asistente Virtual:** Un widget de chat flotante que se conecta al backend de IA para resolver preguntas frecuentes.
-- **Formulario de Contacto Serverless:** Envía solicitudes de correo escribiendo en una colección de Firestore, que activa una Cloud Function.
-
-## Stack Tecnológico
-
-- **Framework:** React.js
-- **Build Tool:** Vite
-- **Estilos:** Tailwind CSS
-- **Routing:** React Router
-- **Cliente de Firebase:** Firebase Client SDK (para Firestore, Auth, Storage)
-- **Peticiones HTTP:** Axios (utilizado principalmente para el endpoint del chatbot)
+He creado un `README.md` completo y profesional para tu carpeta `front-end`, inspirado en las mejores prácticas y adaptado a tu stack tecnológico.
 
 ---
 
-## Configuración y Puesta en Marcha Local
+### `README.md` para la Carpeta `front-end`
 
-Sigue estos pasos para ejecutar el frontend en tu máquina local.
+Copia y pega el siguiente contenido en un nuevo archivo llamado `README.md` dentro de la raíz de tu carpeta `front-end`.
 
-### 1. Navega a la carpeta del frontend
-```bash
-cd front-end
-```
+```markdown
+<a name="readme-top"></a>
 
-### 2. Instala las dependencias
-```bash
-npm install
-```
+# Frontend: Portal de Cliente - Proyecto Abogado
 
-### 3. Configura las Variables de Entorno
-Crea un archivo llamado `.env` en la raíz de la carpeta `front-end`. Este archivo **no** debe ser subido a Git.
+Este directorio contiene el código fuente de la aplicación de React para el "Proyecto Abogado". Es la interfaz de usuario con la que interactúan los clientes, construida como una Single-Page Application (SPA) moderna y responsiva.
 
-Copia el contenido de `.env.example` (si existe) o usa la siguiente plantilla:
+Esta aplicación se conecta a un backend desacoplado (Firebase y Node.js) para obtener y gestionar todos los datos.
 
-**`.env`**
-```
-# La URL donde se está ejecutando tu servidor de backend
-REACT_APP_API_URL=http://localhost:3001
+## ✨ Funcionalidades Clave
 
-# También puedes poner tus credenciales de Firebase aquí si prefieres,
-# aunque es más común tenerlas en un archivo de configuración de JS.
-```
+-   **Autenticación de Usuarios:** Sistema completo de registro e inicio de sesión gestionado por **Firebase Authentication**.
+-   **Portal de Cliente Seguro:** Un dashboard privado (`/cuenta`) donde los clientes pueden ver el estado de sus casos.
+-   **Lista de Casos:** Visualización de todos los casos asociados a un cliente, obtenidos desde Firestore.
+-   **Detalle de Caso en Tiempo Real:** Una página dedicada por caso que se actualiza instantáneamente con los cambios en la base de datos (nuevos mensajes, documentos, etc.) gracias a los listeners de Firestore.
+-   **Catálogo de Servicios:** Muestra de los servicios legales ofrecidos.
+-   **Carrito de Compras:** Funcionalidad de e-commerce para la contratación de servicios.
+-   **Asistente Virtual con IA:** Un widget de chat que se conecta a una API de LangChain para responder preguntas frecuentes.
+-   **Diseño Responsivo:** Interfaz completamente adaptable a dispositivos móviles y de escritorio gracias a **Tailwind CSS**.
 
-### 4. Ejecuta el Servidor de Desarrollo
-```bash
-npm start
-```
-La aplicación se abrirá automáticamente en `http://localhost:3000` (o el puerto que tengas configurado).
+## 🚀 Stack Tecnológico
+
+-   **Framework:** [![React][React.js]][React-url]
+-   **Build Tool:** [![Vite][Vite.js]][Vite-url]
+-   **Enrutamiento:** React Router
+-   **Estilos:** [![TailwindCSS][Tailwind.css]][Tailwind-url]
+-   **Backend Services:** [![Firebase][Firebase.com]][Firebase-url] (Auth, Firestore, Storage)
+-   **Peticiones HTTP:** Axios (para la API del chatbot)
+-   **Iconos:** FontAwesome
+
+## 🛠️ Configuración y Puesta en Marcha
+
+Para ejecutar este proyecto en tu entorno local, sigue estos pasos.
+
+### Prerrequisitos
+
+-   Node.js (v18 o superior)
+-   npm o yarn
+
+### Instalación
+
+1.  **Navega a este directorio**
+    Asegúrate de que tu terminal esté dentro de la carpeta `front-end`.
+
+2.  **Instala las dependencias**
+    ```sh
+    npm install
+    ```
+
+3.  **Configura las Variables de Entorno**
+    -   Crea un archivo llamado `.env` en la raíz de este directorio (`front-end/.env`).
+    -   Este archivo es **ignorado por Git** y contendrá tus claves secretas.
+
+4.  **Configura Firebase**
+    -   Crea un archivo `firebase-config.js` en la carpeta `src`.
+    -   Ve a tu [Consola de Firebase](https://console.firebase.google.com/), selecciona tu proyecto, ve a "Configuración del proyecto" y copia el objeto de configuración web (`firebaseConfig`).
+    -   Pega esa configuración en tu archivo `firebase-config.js`.
+
+5.  **Configura la URL de la API del Backend**
+    -   Abre tu archivo `.env` y añade la siguiente línea. Esta variable apunta a tu servidor local de Node.js/Express donde corre la API (incluido el chatbot).
+    ```
+    REACT_APP_API_URL=http://localhost:3001
+    ```
 
 ### Scripts Disponibles
 
-- `npm start`: Inicia el servidor de desarrollo.
-- `npm run build`: Compila la aplicación para producción en la carpeta `build`.
-- `npm test`: Ejecuta las pruebas.
+En el directorio del proyecto, puedes ejecutar:
+
+-   `npm start`
+    Inicia la aplicación en modo de desarrollo. Ábrela en [http://localhost:3000](http://localhost:3000) en tu navegador. La página se recargará si haces cambios.
+
+-   `npm run build`
+    Construye la aplicación para producción en la carpeta `build`. Empaqueta React correctamente en modo de producción y optimiza la compilación para el mejor rendimiento.
+
+-   `npm test`
+    Inicia el corredor de pruebas en modo interactivo.
+
+## 📁 Estructura de Carpetas
+
+El código fuente está organizado de la siguiente manera:
 
 ```
-
----
-
-### 2. README para el Backend
-
-Este archivo debe ir en la raíz de tu carpeta `back-end`.
-
-**Ruta:** `back-end/README.md`
-
-```markdown
-# Proyecto Abogado - Backend
-
-Esta carpeta contiene el servidor de Node.js/Express y las Cloud Functions que dan servicio a la aplicación "Proyecto Abogado". Su principal responsabilidad es actuar como una API segura, gestionar la lógica de negocio y comunicarse con servicios externos como Firebase y OpenAI.
-
-## Arquitectura y Responsabilidades
-
-El backend sigue una arquitectura modular para una fácil mantenibilidad y escalabilidad:
-
-- **/config:** Centraliza la configuración de la base de datos (Firebase Admin SDK).
-- **/controllers:** Contiene la lógica de negocio para cada entidad (autenticación, casos, etc.).
-- **/routes:** Define los endpoints de la API y los conecta con sus respectivos controladores.
-- **/functions:** Código para las funciones serverless desplegadas en Firebase (ej. envío de correos).
-- **/database:** Incluye los scripts para la estructura (`migrations`) y los datos iniciales (`seeds`) de la base de datos.
-- **server.js:** El punto de entrada que inicializa el servidor de Express y une todos los módulos.
-
-## Stack Tecnológico
-
-- **Framework:** Node.js, Express.js
-- **Base de Datos:** Cloud Firestore (NoSQL)
-- **Autenticación:** Firebase Admin SDK
-- **Funciones Serverless:** Firebase Cloud Functions
-- **Inteligencia Artificial:** LangChain.js con la API de OpenAI (RAG)
-- **Envío de Correos:** Nodemailer (a través de una Cloud Function)
-
----
-
-## Configuración y Puesta en Marcha Local
-
-Sigue estos pasos para ejecutar el backend en tu máquina local.
-
-### 1. Navega a la carpeta del backend
-```bash
-cd back-end
+/src
+|-- /components/      # Componentes de UI reutilizables (Botones, Cards, etc.)
+|-- /contexts/        # Proveedores de Contexto para el estado global (Carrito, Cuenta)
+|-- /pages/           # Componentes que representan una página completa (Home, SignIn, Cuenta)
+|-- firebase-config.js  # Archivo de configuración y conexión con Firebase
+|-- App.js            # Componente principal y enrutador de la aplicación
+|-- index.js          # Punto de entrada de la aplicación
 ```
 
-### 2. Instala las dependencias
-```bash
-npm install
-```
+<p align="right">(<a href="#readme-top">Volver a arriba</a>)</p>
 
-### 3. Configura las Variables de Entorno
-Crea un archivo llamado `.env` en la raíz de la carpeta `back-end`. Este archivo **es crucial y no debe ser subido a Git**.
-
-**`.env`**
-```
-# Credenciales de tu base de datos (si usaras una externa)
-# DB_HOST=...
-
-# Clave de API de OpenAI para el Asistente Virtual
-OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxx
-
-# Credenciales de correo para Nodemailer (usado por la Cloud Function)
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USER=tu.correo@gmail.com
-SMTP_PASSWORD=tu_contraseña_de_aplicacion
-```
-
-### 4. Configura la Clave de Servicio de Firebase
-1.  Ve a la Consola de Firebase > Configuración del proyecto > Cuentas de servicio.
-2.  Genera una nueva clave privada. Se descargará un archivo `.json`.
-3.  Renombra este archivo a `serviceAccountKey.json` y muévelo a la carpeta `back-end/config`.
-4.  **¡IMPORTANTE!** Asegúrate de que tu archivo `back-end/.gitignore` contiene la línea `config/serviceAccountKey.json` para evitar subir esta clave secreta.
-
-### 5. Configura la Base de Datos
-Para levantar la base de datos por primera vez con datos de prueba, ejecuta el script de sembrado:
-```bash
-node database/seed.js
-```
-
-### 6. Ejecuta el Servidor de Desarrollo
-Usa `nodemon` para que el servidor se reinicie automáticamente con cada cambio.
-```bash
-npm run dev
-```
-El servidor se iniciará en `http://localhost:3001` (o el puerto definido en tus variables de entorno).
-
+<!-- MARKDOWN LINKS & IMAGES -->
+[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React-url]: https://reactjs.org/
+[Vite.js]: https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white
+[Vite-url]: https://vitejs.dev/
+[Tailwind.css]: https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white
+[Tailwind-url]: https://tailwindcss.com/
+[Firebase.com]: https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black
+[Firebase-url]: https://firebase.google.com/
 ```
